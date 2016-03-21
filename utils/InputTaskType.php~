@@ -7,7 +7,6 @@ class InputTaskType extends TaskType
 	{
 		return new \app\behaviors\InputTaskBehavior();
 	}
-
 	public function getFormTemplate()
 	{
 		return TaskType::PROTOTYPE_DIR.'inputtype';
@@ -18,63 +17,60 @@ class InputTaskType extends TaskType
 		return 'Ввод числа или слова в поле для ответа';
 	}
 	public function getPrototypeFilename() { return TaskType::PROTOTYPE_DIR.'task_input.xml'; }	
+
+	private $localscope = [];
 	
-	protected function processAnswerElement(\SimpleXMLElement $elem, $action)
+	protected function processAnswerElement(\SimpleXMLElement $elem, $params)
 	{
-		$isnumeric = false;
-		TaskType::ProcessAnswerElement($elem, $action);
-		if ($action == TaskType::RENDER_VIEW_ACTION)
+		$this->localscope['isnumeric'] = false;
+		parent::processAnswerElement($elem, $params);
+		extract($params); // model action
+		if ($this->localscope['isnumeric'])
+			$t = 'number';
+		else
+			$t = 'text';
+		if ($action == TaskType::RENDER_SOLVE_ACTION)
 		{
-			if ($isnumeric)
-				$t = 'numeric';
-			else
-				$t = 'text';
-			$retval = "<input type=\"$t\" value=\"$elem\"/>";
+			$model->correctAnswer = (string)$elem;
+			$name = $model->getInputElementName();
+			$retval = "<input type=\"$t\" name=\"$name\"/>";
 			echo $retval;
-			\Yii::trace($retval, "Generated for input");
+		}
+		else if ($action == TaskType::RENDER_VIEW_ACTION)
+		{
+			echo "<input type=\"$t\" value=\"$elem\"/>";
+		}
+		else if ($action == TaskType::PARSE_ACTION)
+		{
+			\Yii::trace('in parsing answer element ', $model->correctAnswer);
+			$model->correctAnswer = (string)$elem;
 		}
 		return false;
 	}
-	
-	public function setModelAttributes($model)
+
+	protected function onAttributes(\SimpleXMLElement $elem, $scope, $params)
 	{
-		try 
-		{
-			$xml = new \SimpleXMLElement($model->content);
-			try {
-				$model->condition = (string)($xml[0]->body);
-				$model->solution = (string) ($xml[0]->solution);
-				$model->answervalue = (string)($xml[0]->answer->{'ans-element'});		
-				$model->answerprefix = (string)($xml[0]->answer->t[0]);	
-				$model->answersuffix = (string)($xml[0]->answer->t[1]);			
-			}
-			catch (\Exception $e)
-			{
-				
-			}
-			
-			// TODO:::
-			$model->isnumeric = true;		
+		parent::onAttributes($elem, $scope, $params);
+		extract($scope); // numeric="xxxx" 
+		if (isset($numeric))
+		{			
+			$this->localscope['isnumeric'] = $numeric == 'true';
 		}
-		catch(\Exception $e)
-		{
-			$model->condition = 'У Васи было 100 бананов. Он съел 49. Сколько бананов осталось у Васи';
-			$model->solution = '100-49=51';		
-			$model->answervalue = '51';
-			$model->answerprefix = 'У Васи осталось';	
-			$model->answersuffix = 'бананов';
-			$model->isnumeric = true;
-		}
+		if (isset($max_score))
+			$params['model']->max_score = $max_score;
 	}
 
-	protected $isnumeric = false;
-
-	protected function onAttribute($attr, $val)
+	public function checkAnswer($model, $postResponse)
 	{
-		TaskType::onAttribute($attr, $val);
-		if ($attr = 'numeric')
-			$this->isnumeric = $val == 'true';
+		if (!isset($postResponse[$model->getInputElementName()]))
+			return "";
+		if ($postResponse[$model->getInputElementName()] == $model->correctAnswer)
+			return $model->max_score;
+		else
+			return "0";
 	}
+
+
 }
 
 ?>

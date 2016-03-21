@@ -40,11 +40,13 @@ class InputTaskType extends TaskType
 		{
 			echo "<input type=\"$t\" value=\"$elem\"/>";
 		}
+/*
 		else if ($action == TaskType::PARSE_ACTION)
 		{
 			\Yii::trace('in parsing answer element ', $model->correctAnswer);
 			$model->correctAnswer = (string)$elem;
 		}
+*/
 		return false;
 	}
 
