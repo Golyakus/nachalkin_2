@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<task struct-type="dropdown">
+  <body>
+    Вчера был день недели, название которого начинается на букву П. Какой день недели будет послезавтра?
+  </body>
+  <answer type="dropdown">
+    Послезавтра будет
+    <ans-element correct="true">понедельник</ans-element>
+    <ans-element >вторник</ans-element>
+    <ans-element >среда</ans-element>
+    <ans-element >четверг</ans-element>
+    <ans-element >пятница</ans-element>
+    <ans-element >суббота</ans-element>
+    <ans-element >воскресенье</ans-element>
+  </answer>
+</task>
+

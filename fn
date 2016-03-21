@@ -1,0 +1,1 @@
+find $1 -name "*.php" -exec grep $2 {} \; -print

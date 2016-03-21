@@ -1,0 +1,32 @@
+<?php
+
+use yii\helpers\Html;
+//use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\Task */
+/* @var $params array
+/* @var $form yii\widgets\ActiveForm */
+?>
+
+<div class="task-form">
+	<span>Тип задания: <?= $model->taskType->getEditTitle() ?></span>
+    <?php $form = ActiveForm::begin(); 
+        extract($params);  
+        $model->taskType->traverse(compact('model', 'form', 'action'));  
+        if ($action == \app\utils\TaskType::RENDER_EDIT_ACTION): ?>  
+        <?= Html::submitButton('Закончить редактирование упражнения', ['class' => 'btn btn-success']) ?>
+    <?php else: ?>
+        <?= Html::submitButton('Изменить упражнение', ['class' => 'btn btn-success', 'name'=>\app\models\Task::EDIT_SUBMIT_BUTTON , 'value'=>$model->contents]) ?>
+        <?= Html::submitButton('Всё верно, сохранить упражнение', ['class' => 'btn btn-success' , 'name'=>\app\models\Task::SAVE_SUBMIT_BUTTON, 'value'=>$model->contents]) ?>
+    <?php endif ?>
+
+   <!-- <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>  -->
+
+   <!-- </div> -->
+
+    <?php ActiveForm::end(); ?>
+
+</div>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<task struct-type="list">
+  <body>
+    Сколько дней в году на планете Земля?   
+  </body>
+  <answer type="checkbox" value="1_2">
+    <ans-element ans-type="check-box" correct="true">365</ans-element>
+    <ans-element ans-type="check-box" correct="true">366</ans-element>
+    <ans-element ans-type="check-box" correct="false">367</ans-element>
+  </answer>
+</task>
+

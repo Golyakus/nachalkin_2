@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<task struct-type="radio">
+  <body> Сколько будет 2 + 2 ?
+  </body>
+  <answer type="radio" value="2">
+    <ans-element ans-type="check-box">3</ans-element>
+    <ans-element ans-type="check-box" correct="true">4</ans-element>
+    <ans-element ans-type="check-box">Не знаю</ans-element>
+  </answer>
+</task>
+

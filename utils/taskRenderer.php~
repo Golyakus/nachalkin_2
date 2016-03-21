@@ -1,0 +1,14 @@
+<?php
+use \yii\base\ViewRenderer;
+
+namespace app\utils;
+
+class TaskRenderer extends ViewRenderer
+{
+	public function render($view, $file, $param)
+	{
+		return "<div>This is xml renderer</div>";
+	}
+}	
+
+?>

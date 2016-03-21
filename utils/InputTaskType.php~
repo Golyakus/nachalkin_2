@@ -1,0 +1,81 @@
+<?php
+namespace app\utils;
+
+class InputTaskType extends TaskType 
+{
+	public function makeBehavior()
+	{
+		return new \app\behaviors\InputTaskBehavior();
+	}
+
+	public function getFormTemplate()
+	{
+		return TaskType::PROTOTYPE_DIR.'inputtype';
+	}
+	public function getType() { return 'input'; }
+	public function getEditTitle()
+	{
+		return 'Ввод числа или слова в поле для ответа';
+	}
+	public function getPrototypeFilename() { return TaskType::PROTOTYPE_DIR.'task_input.xml'; }	
+	
+	protected function processAnswerElement(\SimpleXMLElement $elem, $action)
+	{
+		$isnumeric = false;
+		TaskType::ProcessAnswerElement($elem, $action);
+		if ($action == TaskType::RENDER_VIEW_ACTION)
+		{
+			if ($isnumeric)
+				$t = 'numeric';
+			else
+				$t = 'text';
+			$retval = "<input type=\"$t\" value=\"$elem\"/>";
+			echo $retval;
+			\Yii::trace($retval, "Generated for input");
+		}
+		return false;
+	}
+	
+	public function setModelAttributes($model)
+	{
+		try 
+		{
+			$xml = new \SimpleXMLElement($model->content);
+			try {
+				$model->condition = (string)($xml[0]->body);
+				$model->solution = (string) ($xml[0]->solution);
+				$model->answervalue = (string)($xml[0]->answer->{'ans-element'});		
+				$model->answerprefix = (string)($xml[0]->answer->t[0]);	
+				$model->answersuffix = (string)($xml[0]->answer->t[1]);			
+			}
+			catch (\Exception $e)
+			{
+				
+			}
+			
+			// TODO:::
+			$model->isnumeric = true;		
+		}
+		catch(\Exception $e)
+		{
+			$model->condition = 'У Васи было 100 бананов. Он съел 49. Сколько бананов осталось у Васи';
+			$model->solution = '100-49=51';		
+			$model->answervalue = '51';
+			$model->answerprefix = 'У Васи осталось';	
+			$model->answersuffix = 'бананов';
+			$model->isnumeric = true;
+		}
+	}
+
+	protected $isnumeric = false;
+
+	protected function onAttribute($attr, $val)
+	{
+		TaskType::onAttribute($attr, $val);
+		if ($attr = 'numeric')
+			$this->isnumeric = $val == 'true';
+	}
+}
+
+?>
+
