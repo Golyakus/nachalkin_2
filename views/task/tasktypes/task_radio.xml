@@ -2,10 +2,10 @@
 <task struct-type="radio">
   <body> Сколько будет 2 + 2 ?
   </body>
-  <answer type="radio" value="2">
-    <ans-element ans-type="check-box">3</ans-element>
-    <ans-element ans-type="check-box" correct="true">4</ans-element>
-    <ans-element ans-type="check-box">Не знаю</ans-element>
+  <answer type="radio" value="2" max_score="10">
+    <ans-element anstype="check-box" score="-5">3</ans-element>
+    <ans-element anstype="check-box" correct="true" score="10">4</ans-element>
+    <ans-element anstype="check-box" score="0">Не знаю</ans-element>
   </answer>
 </task>
 

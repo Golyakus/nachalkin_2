@@ -3,10 +3,10 @@
   <body>
     Сколько дней в году на планете Земля?   
   </body>
-  <answer type="check" value="1_2">
-    <ans-element ans-type="check-box" correct="true">365</ans-element>
-    <ans-element ans-type="check-box" correct="true">366</ans-element>
-    <ans-element ans-type="check-box" correct="false">367</ans-element>
+  <answer type="check" value="1_2" max_score="10">
+    <ans-element anstype="check-box" correct="true" score="5">365</ans-element>
+    <ans-element anstype="check-box" correct="true" score="5">366</ans-element>
+    <ans-element anstype="check-box" correct="false" score="-5">367</ans-element>
   </answer>
 </task>
 

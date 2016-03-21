@@ -3,7 +3,7 @@
   <body>
     Вчера был день недели, название которого начинается на букву П. Какой день недели будет послезавтра?
   </body>
-  <answer type="dropdown">
+  <answer type="dropdown" max_score="10">
     Послезавтра будет
     <ans-element correct="true">понедельник</ans-element>
     <ans-element >вторник</ans-element>

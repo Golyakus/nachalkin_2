@@ -19,6 +19,29 @@ use Yii;
  */
 class Taskresult extends \yii\db\ActiveRecord
 {
+
+    function __construct()
+    {
+        parent::__construct();
+        $num_tries = 0;
+        $score = null;
+    }
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => 
+                    [       
+                     'class' => \yii\behaviors\TimestampBehavior::className(),
+                     'attributes' => [
+                         \yii\db\BaseActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                         \yii\db\BaseActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                                     ],
+                     'value' => new \yii\db\Expression('NOW()'),
+                    ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -33,8 +56,8 @@ class Taskresult extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'user_id', 'task_id'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['user_id', 'task_id'], 'required'],
+           // [['created_at', 'updated_at'], 'safe'],
             [['user_id', 'task_id', 'num_tries'], 'integer'],
             [['score'], 'string', 'max' => 255],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
@@ -63,5 +86,20 @@ class Taskresult extends \yii\db\ActiveRecord
     public function getTask()
     {
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
+    }
+
+    /**
+     * @return \app\models\Taskresult
+     */
+    public static function getModelByTask($taskId, $userId)
+    {
+        $model = static::find()->where(['task_id' => $taskId])->andWhere(['user_id' => $userId])->one();
+        if (!$model)
+        {
+            $model = new Taskresult();
+            $model->task_id = $taskId;
+            $model->user_id = $userId;
+        }
+        return $model;
     }
 }

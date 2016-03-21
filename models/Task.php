@@ -21,6 +21,13 @@ class Task extends \yii\db\ActiveRecord
 
 	public $taskType = NULL;
 
+	/**
+     * @return \app\models\Task
+     */
+	public static function findModel($id)
+	{
+		return static::find()->where(['id'=>$id])->one();
+	}
 	
 	/**
      * @return \yii\db\ActiveQuery
@@ -44,6 +51,12 @@ class Task extends \yii\db\ActiveRecord
 		$this->updateFromContent();
 	}
 
+	public function prepareForSolving()
+	{
+		$this->attachBehavior('tasktype', $this->taskType->makeBehavior());
+		$this->updateFromContent();
+	}
+
 	public function setType($type)
 	{
 		$this->struct_type = $type;
@@ -60,9 +73,14 @@ class Task extends \yii\db\ActiveRecord
 	
 	private function updateFromContent()
 	{
-		$this->max_score = '10';
+		$this->taskType->traverse(['model'=>$this, 'action'=>\app\utils\TaskType::PARSE_ACTION]);
 		return true;
 	}	
+
+	public function checkAnswer($postResponse)
+	{
+		return $this->taskType->checkAnswer($this, $postResponse);
+	}
 
     /**
      * @inheritdoc

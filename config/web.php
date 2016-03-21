@@ -46,6 +46,7 @@ $config = [
             'rules' => [
 				'task/newtask/<type:\w+>/<subjectId:\d+>/<themeId:\d+>' => 'task/newtask',
 				'task/update/<id:\d+>/<subjectId:\d+>' => 'task/update',
+				'task/solve/<id:\d+>' => 'task/solve',
 				'task/choosetype/<subjectId:\d+>/<themeId:\d+>' => 'task/choosetype',
 				'theme/<subjectId:\d+>/<themeId:\d+>' => 'theme',
 				'theme/view/<subjectId:\d+>/<id:\d+>'=> 'theme/view',

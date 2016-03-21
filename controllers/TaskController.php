@@ -185,11 +185,6 @@ class TaskController extends Controller
         else {
             $response->data = ['error'=>'Ошибка загрузки файла на сервер'];
         }
-        /*
-        [
-                
-            ];
-        */
         return $response;
     }
 
@@ -237,6 +232,54 @@ class TaskController extends Controller
                     ],
                 ]       
             ];
+    }
+
+    public function actionSolverand($themeId)
+    {
+    	// TODO:    	
+    	// select * from Task where Task.theme_id = $themeId and Task.id NOT IN (select task_id from Taskresult where Taskresult.user_id = 102 and not Taskresult.score is null)
+    	// now select only tasks
+    	$q = \app\models\Task::getTasksForTheme($themeId)->select('id')->asArray();
+
+    	if (($n = $q->count()) == 0)
+    	{
+    		throw new \yii\base\UserException("В теме с ключом $themeId нет задач");
+    	}
+    	$number = mt_rand(0, $n-1);
+    	$ids = $q->all();
+    	$response = $this->solveTask($ids[$number]);
+    	if (!$response) //TODO:: get the subject - cookie???
+    		return $this->redirect('/theme/list?subjectId=1');
+    	return $response;
+
+
+    }
+
+    public function actionSolve($id)
+    {
+    	$response = $this->solveTask($id);
+    	if (!$response) //TODO:: get the subject - cookie???
+    		return $this->redirect('/theme/list?subjectId=1');
+    	return $response;
+    }
+
+    private function solveTask($id)
+    {
+    	$model = \app\models\Taskresult::getModelByTask($id, 102);
+    	$taskModel = \app\models\Task::findModel($model->task_id);
+        $taskModel->prepareForSolving();
+        $score = $taskModel->checkAnswer(Yii::$app->request->post());
+        \Yii::trace($score, 'score');
+    	if ($score != "")
+    	{
+    		$model->num_tries++;
+    		$model->score = $score;
+    		if (!$model->save())
+                \Yii::trace("Error saving task result....", 'info');
+    		//return false;
+return $this->render('solve', compact('model', 'taskModel'));
+    	}
+    	return $this->render('solve', compact('model', 'taskModel'));
     }
 
 }

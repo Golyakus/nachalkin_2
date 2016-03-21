@@ -3,13 +3,28 @@ namespace app\behaviors;
 
 abstract class TaskBehavior extends \yii\base\Behavior
 {
-	/* return array of label attributes for rendering at ActiveForm */
-	public abstract function getAttributeLabels();
-	/* returns array of configuration for ActiveRecord rules for added attributes */
-	public abstract function getRules();
+	/** abstract properties
+	 * should be filled in descendants
+	*/
+	protected $name;
+	public $correctAnswer;
+
+	public function getInputElementName()
+	{
+		return $this->name;
+	}
+	public function updateCorrectAnswer($value)
+	{
+		$this->name = $value;
+	}
+
+	/**
+	 * return score for task according to post response
+	*/
+	//public abstract function checkAnswer($postResponse);
 
 	/* loads added attribures from fields of Task active record */
-	public abstract function loadTypeSpecific(\app\models\Task $task);
+	//public abstract function loadTypeSpecific(\app\models\Task $task);
 }
 
 ?>

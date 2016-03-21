@@ -5,7 +5,7 @@
   </body>
   <answer type="input" value="25" max_score="10">Ответ:
     <t>Винни-Пух съел</t>
-    <ans-element ans-type="input" hidden="true" numeric="true" max_score="10">25</ans-element>
+    <ans-element anstype="input" hidden="true" numeric="true" max_score="10">25</ans-element>
     <t>бананов</t>
   </answer>
 </task>

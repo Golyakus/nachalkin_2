@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <task struct-type="input">
   <body>
-    Винни-Пух, Сова, Кролик и Пятачок вместе съели 70 бананов. При этом Сова и Кролик съели вместе 45 бананов. Сколько бананов съел Винни-Пух, если он известно, что он съел больше всех бананов?     
+    Винни-Пух, Сова, Кролик и Пятачок вместе съели 70 бананов. При этом Сова и Кролик съели вместе 45 бананов. Сколько бананов съел Винни-Пух, если известно, что он съел больше всех бананов?     
   </body>
   <answer type="input" value="25" max_score="10">Ответ:
     <t>Винни-Пух съел</t>
-    <ans-element ans-type="input" hidden="true" numeric="true" max_score="10">25</ans-element>
+    <ans-element anstype="input" hidden="true" numeric="true" max_score="10">25</ans-element>
     <t>бананов</t>
   </answer>
 </task>

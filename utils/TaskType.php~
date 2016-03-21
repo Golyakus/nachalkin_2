@@ -165,7 +165,7 @@ abstract class TaskType
 			if ($action == TaskType::RENDER_VIEW_ACTION)
 			{
 				$this->title = "task";
-				echo $form->field($model, 'content')->hiddenInput();
+				//echo $form->field($model, 'content')->hiddenInput();
 				echo "<div>";
 			}
 			return true;
