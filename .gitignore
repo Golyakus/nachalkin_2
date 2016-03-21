@@ -30,6 +30,6 @@ phpunit.phar
 *.php~
 
 #ignore local yii files
-web/assets/*
-web/uploads/*
-web/runtime/*
+/web/assets/*
+/web/uploads/*
+/web/runtime/*
