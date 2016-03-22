@@ -11,7 +11,7 @@ class m160229_103554_add_theme_task_relation extends Migration
 
     public function down()
     {
-        $this->dropPrimaryKey('FK_theme_task', 'task');
+        $this->dropForeignKey('FK_theme_task', 'task');
         return true;
     }
 
