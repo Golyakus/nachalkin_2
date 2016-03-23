@@ -182,7 +182,7 @@ abstract class TaskType
 		};
 		$this->startElement['body'] = function($self, $elem, $params) {
 			extract($params);
-			if ($action == self::PARSE_ACTION)
+			if ($action != self::PARSE_ACTION)
 				echo '<div>';
 			return true;
 		};
