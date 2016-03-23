@@ -10,7 +10,7 @@ abstract class ButtonTaskType extends TaskType
 	protected function traverseStart(\SimpleXMLElement $elem, $params)
 	{
 		$retval = parent::traverseStart($elem, $params);
-		if ($elem->getName() == 'task')
+		if ($elem->getName() == 'task' && $params['action'] == TaskType::RENDER_SOLVE_ACTION)
 			$params['model']->setNameSeed();
 		return $retval;
 	}
@@ -18,7 +18,8 @@ abstract class ButtonTaskType extends TaskType
 	protected function processAnswerElement(\SimpleXMLElement $elem, $params)
 	{
 		extract($params);
-		$model->newAnswerElement();
+		if ($action == TaskType::RENDER_SOLVE_ACTION)
+			$model->newAnswerElement();
 		$this->localscope['score'] = "0";
 		$this->localscope['correct'] = false;
 		parent::processAnswerElement($elem, $params);
@@ -26,12 +27,14 @@ abstract class ButtonTaskType extends TaskType
 		$t = $this->getHtmlAnswerType();
 		$retval = "<input type=\"$t\" ";
 		if ($this->localscope['correct'])
-		{
-			$model->updateCorrectAnswer($score);
+		{			
 			if ($action == TaskType::RENDER_VIEW_ACTION)
-				$retval .= "checked ";		
-		} 		
-		$retval .= " name=\"" . $model->getInputElementName() . "\" value=\"$score\">" . $elem . '</input><br>';
+				$retval .= "checked ";
+			else if ($action == TaskType::RENDER_SOLVE_ACTION)
+				$model->updateCorrectAnswer($score);
+		}
+		$name = $action == TaskType::RENDER_SOLVE_ACTION ? $model->getInputElementName() : "";	
+		$retval .= " name=\"" . $name . "\" value=\"$score\">" . $elem . '</input><br>';
 		if ($action != TaskType::PARSE_ACTION)
 			echo $retval;
 		return false;
