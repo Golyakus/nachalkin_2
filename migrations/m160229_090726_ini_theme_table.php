@@ -12,8 +12,8 @@ class m160229_090726_ini_theme_table extends Migration
 		  'created_by'=>'string NOT NULL',
 		  'updated_at'=>'timestamp',
 		  'updated_by'=>'string NOT NULL',
-		  'title' => 'string not null',
-		  'description'=>'text NOT NULL',
+		  'title' => 'string',
+		  'description'=>'text',
 		  'parent' => 'int(11)',
 		]		
 		);

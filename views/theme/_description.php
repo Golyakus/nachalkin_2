@@ -4,13 +4,14 @@ use yii\helpers\Html;
 /* @var $model app\models\Theme */
 
 $themeId = $model->id;
+$subjectId = 1;
 ?>
 <div id="themePanel" class="panel panel-default">
      <div class="panel-heading h4">
      	<b class="active-theme-title"><?= $model->title ?></b>	          
      	<div class="pull-right">
-     		<a href="<?= "/theme/update/$themeId/1" ?>" class="btn btn-default btn-sm" >Редактировать тему</a>
-     		<a href= "<?= "/task/choosetype/1/$themeId" ?>"  class="btn btn-default btn-sm" > Добавить упражнение в тему</a>
+     		<a href="<?= "/theme/update/$themeId/$subjectId" ?>" class="btn btn-default btn-sm" >Редактировать тему</a>
+     		<a href= "<?= "/task/choosetype/$subjectId/$themeId" ?>"  class="btn btn-default btn-sm" > Добавить упражнение в тему</a>
      	</div>
      </div>
      <div class="panel-body">
@@ -20,4 +21,4 @@ $themeId = $model->id;
   	</div>
 
     <!-- TODO: СChange subjectID from 1 to $model->subjectId -->
-    <?= HTML::a("Упражнения темы", ["view", "id" => $themeId, "subjectId" => "1"], ["class" => "btn btn-primary btn-lg"]) ?>
+    <?= HTML::a("Упражнения темы", ["view", "id" => $themeId, "subjectId" => $subjectId], ["class" => "btn btn-primary btn-lg"]) ?>

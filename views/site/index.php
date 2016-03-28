@@ -1,6 +1,11 @@
 <?php
 
 use yii\helpers\Html;
+use yii\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $subjectId */
+/* @var $dataProvider provider for app\models\Kim */
 
 function generateNestable($treeElement)
 {
@@ -16,9 +21,7 @@ function generateNestable($treeElement)
 	echo '</ol>';
 }
 
-//TODO: change model from theme with id = 1 to subject
-
-$model = \app\models\Subject::findModel(1)->getTheme()->one();
+$model = \app\models\Subject::findModel($subjectId)->getTheme()->one();
 ?>
 <!--
 	<div>
@@ -38,7 +41,7 @@ $model = \app\models\Subject::findModel(1)->getTheme()->one();
 
 			<div class="js-nestable-action"><a data-action="expand-all" class="btn btn-default btn-sm mr-sm">Развернуть все</a><a data-action="collapse-all" class="btn btn-default btn-sm">Свернуть все</a>
 			 
-       <?= HTML::a("Добавить новую тему", ['/theme/create','subjectId' => $model->id, 'parentId' => $model->id], ['class' => 'btn btn-default btn-sm']) ?>
+       <?= HTML::a("Добавить новую тему", ['/theme/create','subjectId' => $subjectId, 'parentId' => $model->id], ['class' => 'btn btn-default btn-sm']) ?>
    			</div>
    			
    			<div id="nestable" class="dd">
@@ -52,11 +55,44 @@ $model = \app\models\Subject::findModel(1)->getTheme()->one();
 		<div class="col-lg-offset-1 col-lg-7">
 			
 			<h3 class="page-heading">Описание темы</h3>
-			<div id="theme-descr"><?= $this->render('/theme/_description', ['model'=>$model]); ?></div>
+			<div id="theme-descr" data-route="/theme/description"><?= $this->render('/theme/_description', ['model'=>$model]); ?></div>
         </div>
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
+      <h3>Задания для предмета "<?= \app\models\Subject::getSubjectName($subjectId) ?>"</h3>
+
+      <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            //['class' => 'yii\grid\SerialColumn'],
+            'id',
+            'title:ntext',
+            [
+              'attribute' => 'status',
+              'content' => function($kim) { return \app\models\Kim::$status_strings[$kim->status]; }
+            ],
+            [
+              'label' => 'Количество упражнений',
+              'content' => function($kim) { return $kim->taskNumber(); }
+            ],
+            'updated_at',
+            [
+              'class' => 'yii\grid\ActionColumn',
+              'template' => '{update} {delete}',
+              'buttons' => [
+                'update' => function ($url, $model, $key) { return '<a href="/kim/update?id='.$model->id . 
+                '" title="Редактировать" aria-label="Редактировать" data-pjax="0"><span class="glyphicon glyphicon-pencil"></span></a>'; },
+                'delete' => function ($url, $model, $key) { return '<a href="/kim/delete?id='.$model->id . 
+                  '" title="Удалить" aria-label="Удалить" data-confirm="Вы уверены, что хотите удалить этот КИМ?" '.
+                   'data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a>';
+                }
+              ],
+            ],
+        ],
+    ]); ?>
+
+    <!--
 			<h3>Задания для 4 класса. Математика</h3> 
 			<div class="panel panel-default">
             	<div class="panel-body">
@@ -101,6 +137,8 @@ $model = \app\models\Subject::findModel(1)->getTheme()->one();
                     </div>
                 </div>
             </div>
-            <a href="#" class="btn btn-primary btn-lg">Добавить новое задание</a>
+            -->
+            <a href= <?= "/kim/create/$subjectId" ?> class="btn btn-primary btn-lg">Добавить новое задание</a>
+
 		</div>				
 	</div>

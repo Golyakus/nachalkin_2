@@ -52,7 +52,8 @@ class SiteController extends Controller
 	//$tasks = \app\models\Task::find()->where(1)->asArray()->all();
         //return $this->render('index', compact('tasks'));
 	//return $this->render('/task/index.php');
-        return $this->render('index', compact('subjectId'));
+		$dataProvider = new \yii\data\ActiveDataProvider(['query'=>\app\models\Kim::find(['subject_id'=>$subjectId])]);
+        return $this->render('index', compact('subjectId', 'dataProvider'));
 
     }
 
