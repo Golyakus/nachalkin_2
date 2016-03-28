@@ -35,14 +35,28 @@ class Theme extends \yii\db\ActiveRecord
         return 'theme';
     }
 
+    public function behaviors()
+    {
+        return [
+            'timestamp' => 
+                    [       
+                     'class' => \yii\behaviors\TimestampBehavior::className(),
+                     'attributes' => [
+                         \yii\db\BaseActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                         \yii\db\BaseActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                                     ],
+                     'value' => new \yii\db\Expression('NOW()'),
+                    ],
+        ];
+    }
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['created_at', 'created_by', 'updated_by', 'title', 'description'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_by', 'updated_by'], 'required'],
+            //[['created_at', 'updated_at'], 'safe'],
             [['description'], 'string'],
             [['parent'], 'integer'],
             [['created_by', 'updated_by', 'title'], 'string', 'max' => 255],
@@ -105,4 +119,16 @@ class Theme extends \yii\db\ActiveRecord
 	{
 		return $this->getTasks()->count() == 0 && $this->getSubtheme()->count() == 0;
 	}
+
+    public static function makeEmptyTheme($userId)
+    {
+        $thModel = new Theme();
+        //$thModel->parent = null;
+        $thModel->created_by = $thModel->updated_by = $userId;
+        //$thModel->description = 'Empty';
+        //$thModel->title = 'Empty';
+        if (!$thModel->save())
+            throw new \yii\base\UserException("Cannot save KIM theme");
+        return $thModel;
+    }
 }

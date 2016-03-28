@@ -45,8 +45,11 @@
         var selected_theme_id = $(this).data('theme-id');
         $('.dd-handle').css("background-color","#fff");
         $(this).css("background-color","#a5e79b");
-        $("#theme-descr").load("/theme/description?id="+ selected_theme_id);
-    
+        //$("#theme-descr").load("/theme/description?id="+ selected_theme_id);
+		var descrip = $("#theme-descr");
+        descrip.load(descrip.data('route') + "?id="+ selected_theme_id);
+    	var tasks = $('#theme-task-header');
+		if (tasks) tasks.load('tasklist?id=' + selected_theme_id + '&kimThemeId=' + $('#kim-div').data('kim-id'));
     });
   });
 
