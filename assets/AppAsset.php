@@ -20,6 +20,7 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/dashboard.css',
+        'css/task.css'
     ];
     public $js = [
         'js/dashboard.js',

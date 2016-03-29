@@ -48,36 +48,28 @@ $themeId = $model->id;
 
             		<?= Html::a('Добавить упражнение в тему', "/task/choosetype/$subjectId/$themeId", ["class" => "pull-right"]) ?>
 				    <el class="h3"> Все упражнения темы </el>
-				    
-
 			</div>
-			<div class="panel-body">
+		</div>
 				<?= ListView::widget([
 			        'dataProvider' => $dataProvider,
 			        'itemOptions' => ['class' => 'item'],
 			        'itemView' => function ($model, $key, $index, $widget) use ($subjectId, $themeId) {
-						$form = ActiveForm::begin();
+			        	echo '<div class="task-panel panel panel-default">';
+			        	echo '<div class="panel-body">';
+			        	echo '<div class="col-sm-8">';
+			        	$form = ActiveForm::begin();
 						$model->taskType->traverse(['model'=>$model, 'form'=>$form, 'action'=>\app\utils\TaskType::RENDER_VIEW_ACTION]);
 						ActiveForm::end();
 						$id = $model->id;
-			            echo Html::a('Редактировать', \Yii::$app->urlManager->createUrl("task/update/$id/$subjectId"));
+
+						echo '</div>';
+						echo '<div class="col-sm-4">';
+			        	echo Html::a('Редактировать', \Yii::$app->urlManager->createUrl("task/update/$id/$subjectId"), ['class' => 'btn btn-sm btn-success pull-right']);
+						
+			            echo '</div> </div> </div>';
+						
 			        },
 			    ]) ?>
-			</div>
-		</div>
+
 	</div>
-</div>
-<div class="theme-view">
-
-
-    
-
-
-    
-        
-		
-    
-		
-	
-
 </div>

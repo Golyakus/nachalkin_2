@@ -1,0 +1,15 @@
+.task-form-input {
+display: inline;
+height: 35px;
+padding: 6px 16px;
+font-size: 14px;
+line-height: 1.52857;
+color: #3A3F51;
+background-color: #FFF;
+background-image: none;
+border: 1px solid #DDE6E9;
+border-radius: 4px;
+margin-inline-start: 6px;
+margin-inline-end: 6px;
+box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
