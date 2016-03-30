@@ -95,6 +95,21 @@ class TaskController extends Controller
         }
     }
 
+    public function actionUpdatekim($id, $subjectId)
+    {
+        $model = $this->findModel($id);
+        $themeId = $model->theme_id;
+        $kim_id = \app\models\Kim::find()->where(['theme_id' => $themeId])->select('id')->one();
+        $theme = static::getThemeParams($subjectId, $themeId); 
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/kim/update?id=' . $kim_id['id']]);
+        } else {
+            $params['invitation'] = 'Редактирование упражнения' . " в задании «" . $theme['subtheme'] . "»";
+            $params['action'] = \app\utils\TaskType::RENDER_EDIT_ACTION; 
+            $theme['subthemeUrl'] = '/kim/update?id=' . $kim_id['id'];      
+            return $this->render('update', compact('model', 'theme', 'params'));
+        }
+    }
     /**
      * Deletes an existing Task model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

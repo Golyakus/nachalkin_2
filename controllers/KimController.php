@@ -103,7 +103,7 @@ class KimController extends Controller
         else if (isset($post['edittask']))
         {
             //return $this->redirect(['edittask', 'id' => $post['edittask']]);
-            return $this->redirect(['/task/update/' . $post['edittask'] . '/' . $subjectId]);
+            return $this->redirect(['/task/updatekim/' . $post['edittask'] . '/' . $subjectId]);
         }
         else // should not be here!!!! check and throw Exception....
             return $this->redirect(['view', 'id' => $model->id]);
