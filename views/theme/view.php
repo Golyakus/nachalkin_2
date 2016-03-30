@@ -47,7 +47,7 @@ $themeId = $model->id;
         <div class="panel panel-default">
             <div class="panel-heading">
 
-            		<?= Html::a('Добавить упражнение в тему', "/task/choosetype/$subjectId/$themeId", ["class" => "pull-right"]) ?>
+            		<?= Html::a('Добавить упражнение в тему', "/task/choosetype/$subjectId/$themeId", ["class" => "btn btn-default btn-success pull-right btn-panel-heading"]) ?>
 				    <el class="h3"> Все упражнения темы </el>
 			</div>
 		</div>
@@ -58,7 +58,7 @@ $themeId = $model->id;
 			        	$id = $model->id;
 			        	echo '<div class="task-panel panel panel-default">';
 			        	echo '<div class="panel-heading">';
-			        	echo "<b>Задача №$id  </b>";
+			        	echo "<b>Упражнение №$id  </b>";
 			        	echo Html::a("Редактировать", \Yii::$app->urlManager->createUrl("task/update/$id/$subjectId"), ['class' => 'pull-right']);
 			        	
 			        	
