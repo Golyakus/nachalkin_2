@@ -3,16 +3,23 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+$this->title = 'Предметы и темы';
+$this->params['breadcrumbs'][] = $this->title;
+
+
 /* @var $this yii\web\View */
-/* @var $subjectId */
 /* @var $dataProvider provider for app\models\Kim */
+/* @var $domainDataProvider for app/models/Domain */
+/* @var $subjectModel \app\models\Subject */
+/* @var $classItems  array of pairs [label, url] for dropdown button*/
 
 function generateNestable($treeElement)
 {
 	echo '<ol class="dd-list">';
 	foreach ($treeElement->children as $th)
 	{
-		echo '<li data-id="'.$th->model->id . '" class="dd-item">';
+    
+		echo '<li data-id="'.$th->model->id . '" class="dd-item">';   
 		echo '<div data-theme-id="' . $th->model->id . '" class="dd-handle"> ' . $th->model->title . '</div>';
 		if (!$th->isLeaf)
 			generateNestable($th);
@@ -21,15 +28,15 @@ function generateNestable($treeElement)
 	echo '</ol>';
 }
 
-$model = \app\models\Subject::findModel($subjectId)->getTheme()->one();
+$subjectId = $subjectModel->id;
+$model = $subjectModel->getTheme()->one();
+$firstSubthemeModel =  \app\models\Theme::find()->where(['parent' => $model->id])->one();
+if (!$firstSubthemeModel) $firstSubthemeModel = $model;
 ?>
-<!--
-	<div>
-		<a href="/site/index?id=1" class="btn btn-default"><?= $model->title ?></a>
-		<a href="/site/index?id=1" class="btn btn-default"><?= $model->title ?></a>
-		<a href="/site/index?id=1" class="btn btn-default"><?= $model->title ?></a>
-	</div>
-	 <select id="grade" class="form-control">
+
+	<?= $this->render('_subjects', compact('domainProvider', 'subjectModel', 'classItems')) ?>
+	
+<!--	 <select id="grade" class="form-control">
   		<option >4 класс</option>
   		<option >4 класс</option>
   		<option >4 класс</option>
@@ -55,7 +62,7 @@ $model = \app\models\Subject::findModel($subjectId)->getTheme()->one();
 		<div class="col-lg-offset-1 col-lg-7">
 			
 			<h3 class="page-heading">Описание темы</h3>
-			<div id="theme-descr" data-route="/theme/description"><?= $this->render('/theme/_description', ['model'=>$model]); ?></div>
+			<div id="theme-descr" data-route="/theme/description"><?= $this->render('/theme/_description', ['model'=>$firstSubthemeModel]); ?></div>
         </div>
 	</div>
 	<div class="row">
