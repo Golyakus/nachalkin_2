@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\widgets\ActiveForm;
+use rmrevin\yii\fontawesome\FA;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Theme */
@@ -42,7 +43,7 @@ $themeId = $model->id;
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-8">
+	<div class="col-sm-6">
         <div class="panel panel-default">
             <div class="panel-heading">
 
@@ -54,19 +55,19 @@ $themeId = $model->id;
 			        'dataProvider' => $dataProvider,
 			        'itemOptions' => ['class' => 'item'],
 			        'itemView' => function ($model, $key, $index, $widget) use ($subjectId, $themeId) {
+			        	$id = $model->id;
 			        	echo '<div class="task-panel panel panel-default">';
+			        	echo '<div class="panel-heading">';
+			        	echo "<b>Задача №$id  </b>";
+			        	echo Html::a("Редактировать", \Yii::$app->urlManager->createUrl("task/update/$id/$subjectId"), ['class' => 'pull-right']);
+			        	
+			        	
+			        	echo "</div>";
 			        	echo '<div class="panel-body">';
-			        	echo '<div class="col-sm-8">';
 			        	$form = ActiveForm::begin();
 						$model->taskType->traverse(['model'=>$model, 'form'=>$form, 'action'=>\app\utils\TaskType::RENDER_VIEW_ACTION]);
-						ActiveForm::end();
-						$id = $model->id;
-
-						echo '</div>';
-						echo '<div class="col-sm-4">';
-			        	echo Html::a('Редактировать', \Yii::$app->urlManager->createUrl("task/update/$id/$subjectId"), ['class' => 'btn btn-sm btn-success pull-right']);
-						
-			            echo '</div> </div> </div>';
+						ActiveForm::end();			        	
+						echo '</div> </div>';
 						
 			        },
 			    ]) ?>

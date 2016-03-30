@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fcb538b0261f583fcf7c9a9c5b52850a",
-    "content-hash": "53b9325ab935fa0b63052467a64b60e0",
+    "hash": "d9148990a64fcb7bba002ff6865ee304",
+    "content-hash": "b27707721415eabfed607492cb4ebd73",
     "packages": [
         {
             "name": "bower-asset/blueimp-canvas-to-blob",
@@ -185,6 +185,43 @@
                 "responsive",
                 "web"
             ]
+        },
+        {
+            "name": "bower-asset/fontawesome",
+            "version": "v4.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
+                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./css/font-awesome.css",
+                    "./fonts/*"
+                ],
+                "bower-asset-ignore": [
+                    "*/.*",
+                    "*.json",
+                    "src",
+                    "*.yml",
+                    "Gemfile",
+                    "Gemfile.lock",
+                    "*.md"
+                ]
+            },
+            "license": [
+                "OFL-1.1",
+                "MIT",
+                "CC-BY-3.0"
+            ],
+            "description": "Font Awesome"
         },
         {
             "name": "bower-asset/jquery",
@@ -376,7 +413,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cebe/markdown/zipball/e4499350d8a94c4c693a7e784295eff7a717ae67",
+                "url": "https://api.github.com/repos/cebe/markdown/zipball/e2a490ceec590bf5bfd1b43bd424fb9dceceb7c5",
                 "reference": "e4499350d8a94c4c693a7e784295eff7a717ae67",
                 "shasum": ""
             },
@@ -523,35 +560,35 @@
             "time": "2016-02-23 08:28:36"
         },
         {
-            "name": "swiftmailer/swiftmailer",
-            "version": "5.x-dev",
+            "name": "rmrevin/yii2-fontawesome",
+            "version": "2.10.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "fffbc0e2a7e376dbb0a4b5f2ff6847330f20ccf9"
+                "url": "https://github.com/rmrevin/yii2-fontawesome.git",
+                "reference": "ce4dd62a048090f3d98822d4bc9401bfcdde1f98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/fffbc0e2a7e376dbb0a4b5f2ff6847330f20ccf9",
-                "reference": "fffbc0e2a7e376dbb0a4b5f2ff6847330f20ccf9",
+                "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/ce4dd62a048090f3d98822d4bc9401bfcdde1f98",
+                "reference": "ce4dd62a048090f3d98822d4bc9401bfcdde1f98",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "bower-asset/fontawesome": "4.3.*",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "2.0.*"
             },
-            "require-dev": {
-                "mockery/mockery": "~0.9.1,<0.9.4"
-            },
-            "type": "library",
+            "type": "yii2-extension",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "5.4-dev"
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
                 }
             },
             "autoload": {
-                "files": [
-                    "lib/swift_required.php"
-                ]
+                "psr-4": {
+                    "rmrevin\\yii\\fontawesome\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -559,21 +596,20 @@
             ],
             "authors": [
                 {
-                    "name": "Chris Corbyn"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "name": "Roman Revin",
+                    "email": "xgismox@gmail.com",
+                    "homepage": "http://rmrevin.ru/"
                 }
             ],
-            "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "http://swiftmailer.org",
+            "description": "Asset Bundle for Yii2 with Font Awesome",
             "keywords": [
-                "email",
-                "mail",
-                "mailer"
+                "asset",
+                "awesome",
+                "bundle",
+                "font",
+                "yii"
             ],
-            "time": "2016-01-03 15:42:47"
+            "time": "2015-06-23 13:06:14"
         },
         {
             "name": "yiisoft/yii2",
@@ -585,7 +621,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/fb87a896b95d6198068f8d3bc113bb39522457dd",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/af2940e94b99bc819e782e17501425474f7372f2",
                 "reference": "fb87a896b95d6198068f8d3bc113bb39522457dd",
                 "shasum": ""
             },
@@ -679,7 +715,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/4133d6b26f48615de38ea1ec04eb00c4b7057bc9",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/e64170ffa5678be6cb8c3decf92feac8142aa523",
                 "reference": "4133d6b26f48615de38ea1ec04eb00c4b7057bc9",
                 "shasum": ""
             },
@@ -729,7 +765,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/d33d1046a5951f2f7823fe343f28ddc58b3421a4",
+                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/348122de0b2c2e343b579f93fcda1da78cab4912",
                 "reference": "d33d1046a5951f2f7823fe343f28ddc58b3421a4",
                 "shasum": ""
             },
@@ -776,7 +812,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/1425ab29929dd195f468d3c4eb340ab509f28b83",
+                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/69cd9763b4807dbbce367d599dc615c5b8a8ef4f",
                 "reference": "1425ab29929dd195f468d3c4eb340ab509f28b83",
                 "shasum": ""
             },
@@ -815,56 +851,6 @@
                 "yii2"
             ],
             "time": "2015-12-24 06:23:53"
-        },
-        {
-            "name": "yiisoft/yii2-swiftmailer",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yiisoft/yii2-swiftmailer.git",
-                "reference": "2cca1bb86444a6438b0720f8c60120a400982366"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/2cca1bb86444a6438b0720f8c60120a400982366",
-                "reference": "2cca1bb86444a6438b0720f8c60120a400982366",
-                "shasum": ""
-            },
-            "require": {
-                "swiftmailer/swiftmailer": "~5.0",
-                "yiisoft/yii2": ">=2.0.4"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "yii\\swiftmailer\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Paul Klimov",
-                    "email": "klimov.paul@gmail.com"
-                }
-            ],
-            "description": "The SwiftMailer integration for the Yii framework",
-            "keywords": [
-                "email",
-                "mail",
-                "mailer",
-                "swift",
-                "swiftmailer",
-                "yii2"
-            ],
-            "time": "2015-12-07 11:40:31"
         }
     ],
     "packages-dev": [
@@ -905,7 +891,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/86ec14457afce95c9ad57ee8394c57f57a1aaf43",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/8deb6343c80c4edf546a6fff01a2b05c7dc59ac4",
                 "reference": "86ec14457afce95c9ad57ee8394c57f57a1aaf43",
                 "shasum": ""
             },
@@ -980,6 +966,59 @@
             "time": "2013-11-01 13:02:21"
         },
         {
+            "name": "swiftmailer/swiftmailer",
+            "version": "5.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "fffbc0e2a7e376dbb0a4b5f2ff6847330f20ccf9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/fffbc0e2a7e376dbb0a4b5f2ff6847330f20ccf9",
+                "reference": "fffbc0e2a7e376dbb0a4b5f2ff6847330f20ccf9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.1,<0.9.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.4-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "lib/swift_required.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Corbyn"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Swiftmailer, free feature-rich PHP mailer",
+            "homepage": "http://swiftmailer.org",
+            "keywords": [
+                "email",
+                "mail",
+                "mailer"
+            ],
+            "time": "2016-01-03 15:42:47"
+        },
+        {
             "name": "yiisoft/yii2-codeception",
             "version": "dev-master",
             "source": {
@@ -989,7 +1028,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-codeception/zipball/ee239c244fd011f11c8827f97ebe7600d03f1841",
+                "url": "https://api.github.com/repos/yiisoft/yii2-codeception/zipball/e01b3c46917b3f00c42f6a4aabf612cc36d792e6",
                 "reference": "ee239c244fd011f11c8827f97ebe7600d03f1841",
                 "shasum": ""
             },
@@ -1034,7 +1073,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/a29ed1039604a576329c8d33138d29065d9f98d5",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/081795536b31d29106b0d1de0cb3aefa3e05e995",
                 "reference": "a29ed1039604a576329c8d33138d29065d9f98d5",
                 "shasum": ""
             },
@@ -1081,7 +1120,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-faker/zipball/186c77214e0a4b75f10380b4e6e5f82788922cb7",
+                "url": "https://api.github.com/repos/yiisoft/yii2-faker/zipball/a8daa97749e7154d91676405a1c59ed81e1ca999",
                 "reference": "186c77214e0a4b75f10380b4e6e5f82788922cb7",
                 "shasum": ""
             },
@@ -1128,7 +1167,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/ce42838abcbef076ebaf46147671d518ae69d028",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/989d6c52c92e51f0d562729c329ee1012191cba2",
                 "reference": "ce42838abcbef076ebaf46147671d518ae69d028",
                 "shasum": ""
             },
@@ -1170,6 +1209,56 @@
                 "yii2"
             ],
             "time": "2016-02-21 20:39:29"
+        },
+        {
+            "name": "yiisoft/yii2-swiftmailer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-swiftmailer.git",
+                "reference": "2cca1bb86444a6438b0720f8c60120a400982366"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/20775fef1047cd927908270a8d7983580304eb57",
+                "reference": "2cca1bb86444a6438b0720f8c60120a400982366",
+                "shasum": ""
+            },
+            "require": {
+                "swiftmailer/swiftmailer": "~5.0",
+                "yiisoft/yii2": ">=2.0.4"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\swiftmailer\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
+                }
+            ],
+            "description": "The SwiftMailer integration for the Yii framework",
+            "keywords": [
+                "email",
+                "mail",
+                "mailer",
+                "swift",
+                "swiftmailer",
+                "yii2"
+            ],
+            "time": "2015-12-07 11:40:31"
         }
     ],
     "aliases": [],
