@@ -13,6 +13,13 @@ use \yii\db\BaseActiveRecord;
  * @property string $created_at
  * @property string $created_by
  * @property string $content
+ * @property string $updated_at
+ * @property string $updated_by
+ * @property string $max_score
+ * @property string $struct_type
+ * @property integer $theme_id
+ *
+ * @property Theme $theme
  */
 class Task extends \yii\db\ActiveRecord
 {
