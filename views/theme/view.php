@@ -10,20 +10,15 @@ use rmrevin\yii\fontawesome\FA;
 /* @var $subjectId */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-if ($model->parent==null)
-{
-	$url = 'subject';
-	$label = 'Предметы';
-}
-else
+$this->title = $model->title;
+
+if ($model->parent!=null)
 {
 	$parentId = $model->parent;
 	$url = ['view', 'subjectId' => $subjectId, 'id'=> $parentId];
 	$label = $model->getParent()->title;
+	$this->params['breadcrumbs'][] = ['label' => $label, 'url' => $url];
 }
-
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => $label, 'url' => $url];
 $this->params['breadcrumbs'][] = $this->title;
 $themeId = $model->id;
 ?>

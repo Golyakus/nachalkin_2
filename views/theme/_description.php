@@ -21,4 +21,4 @@ $subjectId = 1;
   	</div>
 
     <!-- TODO: СChange subjectID from 1 to $model->subjectId -->
-    <?= HTML::a("Упражнения темы", ["view", "id" => $themeId, "subjectId" => $subjectId], ["class" => "btn btn-primary btn-lg"]) ?>
+    <?= HTML::a("Упражнения темы", ["/theme/view", "id" => $themeId, "subjectId" => $subjectId], ["class" => "btn btn-primary btn-lg"]) ?>
