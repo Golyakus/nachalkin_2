@@ -119,6 +119,12 @@ body {
   height: 0;
   border-bottom: 1px solid #e1e2e3;
 }
+
+.btn-panel-heading{
+    margin-top: -5px;
+    margin-right: -5px;
+}
+
 .panel-inverse {
   border-color: #cfdbe2;
 }

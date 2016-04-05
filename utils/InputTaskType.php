@@ -33,12 +33,14 @@ class InputTaskType extends TaskType
 		{
 			$model->correctAnswer = (string)$elem;
 			$name = $model->getInputElementName();
-			$retval = "<input type=\"$t\" name=\"$name\"/>";
+			$retval = "<input class='task-form-input' style='width:$answer_length"."em;'"."name=\"$name\"/>";
 			echo $retval;
 		}
 		else if ($action == TaskType::RENDER_VIEW_ACTION)
 		{
-			echo "<input type=\"$t\" value=\"$elem\"/>";
+			$answer_length = strlen($elem) + 2;
+			$answer_length_max = $answer_length - 2;
+			echo "<input class='task-form-input' maxlength=$answer_length_max style='width:$answer_length"."em'"."value=$elem />";
 		}
 /*
 		else if ($action == TaskType::PARSE_ACTION)

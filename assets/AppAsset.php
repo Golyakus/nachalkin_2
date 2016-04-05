@@ -20,6 +20,7 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/dashboard.css',
+        'css/task.css'
     ];
     public $js = [
         'js/dashboard.js',
@@ -28,5 +29,6 @@ class AppAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        '\rmrevin\yii\fontawesome\AssetBundle',
     ];
 }

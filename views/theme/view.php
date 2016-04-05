@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\widgets\ActiveForm;
+use rmrevin\yii\fontawesome\FA;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Theme */
@@ -37,42 +38,34 @@ $themeId = $model->id;
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-8">
+	<div class="col-sm-6">
         <div class="panel panel-default">
             <div class="panel-heading">
 
-            		<?= Html::a('Добавить упражнение в тему', "/task/choosetype/$subjectId/$themeId", ["class" => "pull-right"]) ?>
+            		<?= Html::a('Добавить упражнение в тему', "/task/choosetype/$subjectId/$themeId", ["class" => "btn btn-default btn-success pull-right btn-panel-heading"]) ?>
 				    <el class="h3"> Все упражнения темы </el>
-				    
-
 			</div>
-			<div class="panel-body">
+		</div>
 				<?= ListView::widget([
 			        'dataProvider' => $dataProvider,
 			        'itemOptions' => ['class' => 'item'],
 			        'itemView' => function ($model, $key, $index, $widget) use ($subjectId, $themeId) {
-						$form = ActiveForm::begin();
+			        	$id = $model->id;
+			        	echo '<div class="task-panel panel panel-default">';
+			        	echo '<div class="panel-heading">';
+			        	echo "<b>Упражнение №$id  </b>";
+			        	echo Html::a("Редактировать", \Yii::$app->urlManager->createUrl("task/update/$id/$subjectId"), ['class' => 'pull-right']);
+			        	
+			        	
+			        	echo "</div>";
+			        	echo '<div class="panel-body">';
+			        	$form = ActiveForm::begin();
 						$model->taskType->traverse(['model'=>$model, 'form'=>$form, 'action'=>\app\utils\TaskType::RENDER_VIEW_ACTION]);
-						ActiveForm::end();
-						$id = $model->id;
-			            echo Html::a('Редактировать', \Yii::$app->urlManager->createUrl("task/update/$id/$subjectId"));
+						ActiveForm::end();			        	
+						echo '</div> </div>';
+						
 			        },
 			    ]) ?>
-			</div>
-		</div>
+
 	</div>
-</div>
-<div class="theme-view">
-
-
-    
-
-
-    
-        
-		
-    
-		
-	
-
 </div>
