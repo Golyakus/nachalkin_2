@@ -124,7 +124,7 @@ class Kim extends \yii\db\ActiveRecord
 
     private function updateFromTheme($themeModel)
     {
-        if($themeModel->title != $this->title || $themeModel->description != $this->description)
+        if(isset($themeModel) && ($themeModel->title != $this->title || $themeModel->description != $this->description))
         {
             $this->title = $themeModel->title;
             $this->description = $themeModel->description;          

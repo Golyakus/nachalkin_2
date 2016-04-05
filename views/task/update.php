@@ -8,9 +8,11 @@ use yii\helpers\Html;
 * @var $params
 */
 
-extract($theme); //$subject, $subjectId, $subtheme, $themeId, 
+extract($theme); //$subject, $subjectId, $subtheme, $themeId, $subthemeUrl
+if (!isset($subthemeUrl))
+	$subthemeUrl = "/theme/view/$subjectId/$themeId";
 $this->title = 'Редактирование упражнения' . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => $subtheme, 'url' => ["/theme/view/$subjectId/$themeId"]];
+$this->params['breadcrumbs'][] = ['label' => $subtheme, 'url' => [$subthemeUrl]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-update">

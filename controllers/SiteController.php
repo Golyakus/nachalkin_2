@@ -49,11 +49,18 @@ class SiteController extends Controller
 
     public function actionIndex($subjectId=1)
     {
-	//$tasks = \app\models\Task::find()->where(1)->asArray()->all();
-        //return $this->render('index', compact('tasks'));
-	//return $this->render('/task/index.php');
+        $subjectModel = \app\models\Subject::findOne($subjectId);
+        if (!$subjectModel)
+            throw new \yii\web\NotFoundHttpException("Subject with id=$subjectId not found");
 		$dataProvider = new \yii\data\ActiveDataProvider(['query'=>\app\models\Kim::find(['subject_id'=>$subjectId])]);
-        return $this->render('index', compact('subjectId', 'dataProvider'));
+        $domainProvider = new \yii\data\ActiveDataProvider(['query' => \app\models\Domain::find()->where(1)]);
+        // find all classes for current domain
+        $query = \app\models\Subject::find()->where(['domain_id' => $subjectModel->domain_id])->orderBy(['class' => SORT_ASC]);
+        $classItems = [];
+        foreach ($query->all() as $subj)
+            $classItems[] = ['label'=> $subj->class, 'url' => '/site/index?subjectId=' . $subj->id];
+
+        return $this->render('index', compact('subjectModel', 'dataProvider', 'domainProvider', 'classItems'));
 
     }
 

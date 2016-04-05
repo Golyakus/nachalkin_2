@@ -13,9 +13,12 @@ class m160229_093425_ini_subject_table extends Migration
 		  'updated_at'=>'timestamp',
 		  'updated_by'=>'string NOT NULL',
 		  'class' => 'string not NULL',
-		  'theme_id' => 'int(11) not NULL'
+		  'theme_id' => 'int(11) not NULL',
+		  'domain_id' => 'int(11) not null',
 		]
 		);
+
+		$this->addForeignKey('FK_domain_subject', 'subject', 'domain_id', 'domain','id');
 
 		$this->addForeignKey('FK_theme_subject', 'subject', 'theme_id', 'theme','id');
 
@@ -28,15 +31,62 @@ class m160229_093425_ini_subject_table extends Migration
 			'created_at'=> $curTime,
 			'theme_id'=> 1,
 			'class'=> '4 класс',
+			'domain_id' => 1,
 		]);
 
-		return true;
+		$this->insert('subject', 
+			['created_by'=>'igor', 
+			'updated_by'=>'igor', 
+			'created_at'=> $curTime,
+			'theme_id'=> 2,
+			'class'=> '4 класс',
+			'domain_id' => 2,
+		]);
+
+		$this->insert('subject', 
+			['created_by'=>'igor', 
+			'updated_by'=>'igor', 
+			'created_at'=> $curTime,
+			'theme_id'=> 3,
+			'class'=> '4 класс',
+			'domain_id' => 3,
+		]);
+
+		$this->insert('subject', 
+			['created_by'=>'igor', 
+			'updated_by'=>'igor', 
+			'created_at'=> $curTime,
+			'theme_id'=> 4,
+			'class'=> '5 класс',
+			'domain_id' => 1,
+		]);
+
+		$this->insert('subject', 
+			['created_by'=>'igor', 
+			'updated_by'=>'igor', 
+			'created_at'=> $curTime,
+			'theme_id'=> 5,
+			'class'=> '5 класс',
+			'domain_id' => 2,
+		]);
+
+	return true;
 
     }
 
     public function down()
     {
         $this->dropForeignKey('FK_theme_subject', 'subject');
+
+		try
+		{	
+			$this->dropForeignKey('FK_domain_subject', 'domain');
+		}
+		catch (\Yii\base\Exception $err)
+		{
+			echo 'Ignoring error: ' . $err->getMessage();
+		}
+
 		$this->dropTable('subject');
 
         return true;

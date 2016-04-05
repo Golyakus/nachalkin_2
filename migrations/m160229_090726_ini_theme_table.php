@@ -6,6 +6,31 @@ class m160229_090726_ini_theme_table extends Migration
 {
     public function up()
     {
+		$this->createTable("domain",
+		[
+			'id'=>'pk',
+			'title' => 'string not NULL'
+		]);
+
+		$this->insert('domain',
+		[
+			'title' => 'Математика',
+		]
+		);
+
+		$this->insert('domain',
+		[
+			'title' => 'Русский язык',
+		]
+		);
+
+		$this->insert('domain',
+		[
+			'title' => 'Метапредметность',
+		]
+		);
+
+
 		$this->createTable("theme", 
 		[ 'id'=>'pk',
 		  'created_at'=>'datetime not NULL',
@@ -24,7 +49,39 @@ class m160229_090726_ini_theme_table extends Migration
 			['created_by'=>'igor', 
 			'updated_by'=>'igor', 
 			'created_at'=> $curTime,
-			'title'=>'Математика',
+			'title'=>'Математика, 4 класс',
+			'description'=>'',
+		]);
+
+		$this->insert('theme', 
+			['created_by'=>'igor', 
+			'updated_by'=>'igor', 
+			'created_at'=> $curTime,
+			'title'=>'Русский язык, 4 класс',
+			'description'=>'',
+		]);
+
+		$this->insert('theme', 
+			['created_by'=>'igor', 
+			'updated_by'=>'igor', 
+			'created_at'=> $curTime,
+			'title'=>'Метапредметность, 4 класс',
+			'description'=>'',
+		]);
+
+		$this->insert('theme', 
+			['created_by'=>'igor', 
+			'updated_by'=>'igor', 
+			'created_at'=> $curTime,
+			'title'=>'Математика, 5 класс',
+			'description'=>'',
+		]);
+
+		$this->insert('theme', 
+			['created_by'=>'igor', 
+			'updated_by'=>'igor', 
+			'created_at'=> $curTime,
+			'title'=>'Русский язык, 5 класс',
 			'description'=>'',
 		]);
 
@@ -38,6 +95,16 @@ class m160229_090726_ini_theme_table extends Migration
     {
 		$this->dropColumn('task', 'theme_id');
         $this->dropTable("theme");
+
+		try
+		{	
+			$this->dropTable('domain');
+		}
+		catch (\Yii\base\Exception $err)
+		{
+			echo 'Ignoring error: ' . $err->getMessage();
+		}
+
 
         return true;
     }
