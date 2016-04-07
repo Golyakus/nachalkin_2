@@ -1,7 +1,10 @@
 .task-form-input {
 display: inline;
-height: 35px;
-padding: 6px 16px;
+height: 30px;
+padding: 4px;
+margin-left: 6px;
+margin-right: 6px;
+text-align:center;
 font-size: 14px;
 line-height: 1.52857;
 color: #3A3F51;

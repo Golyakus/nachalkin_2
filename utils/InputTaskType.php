@@ -38,9 +38,10 @@ class InputTaskType extends TaskType
 		}
 		else if ($action == TaskType::RENDER_VIEW_ACTION)
 		{
-			$answer_length = strlen($elem) + 2;
-			$answer_length_max = $answer_length - 2;
-			echo "<input class='task-form-input' maxlength=$answer_length_max style='width:$answer_length"."em'"."value=$elem />";
+			
+			$answer_length = strlen($elem) + 1;
+
+			echo "<input class='task-form-input' maxlength=$answer_length style='width:$answer_length"."em'"."value=$elem />";
 		}
 /*
 		else if ($action == TaskType::PARSE_ACTION)
