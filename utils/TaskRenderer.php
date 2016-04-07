@@ -14,6 +14,9 @@ class TaskRenderer extends ViewRenderer
 	public function renderXMLTask( \SimpleXMLElement $task, array $param)
 	{
 		extract($param); // $params, $tasktype
+		$pseudoModel = new \app\models\Task();
+		$pseudoModel->setType($tasktype->getType());
+		$params['model'] = $pseudoModel;
 		$tasktype->render($task, $params);
 	}
 }	
