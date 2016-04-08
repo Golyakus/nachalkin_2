@@ -33,7 +33,8 @@ class InputTaskType extends TaskType
 		{
 			$model->correctAnswer = (string)$elem;
 			$name = $model->getInputElementName();
-			$retval = "<input class='task-form-input' style='width:$answer_length"."em;'"."name=\"$name\"/>";
+			$answer_length = strlen($elem) + 1; 
+			$retval = "<input class='task-form-input' style='width:$answer_length"."em;'"."name=\"$name\" />";
 			echo $retval;
 		}
 		else if ($action == TaskType::RENDER_VIEW_ACTION)
@@ -41,7 +42,7 @@ class InputTaskType extends TaskType
 			
 			$answer_length = strlen($elem) + 1;
 
-			echo "<input class='task-form-input' maxlength=$answer_length style='width:$answer_length"."em'"."value=$elem />";
+			echo "<input class='task-form-input' maxlength=$answer_length style='width:$answer_length"."em'"."value=$elem disabled/>";
 		}
 /*
 		else if ($action == TaskType::PARSE_ACTION)
