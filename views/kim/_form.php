@@ -40,7 +40,7 @@ use yii\bootstrap\ActiveForm;
                     <label class="col-sm-3 control-label">Время выполнения задания</label>
                     <div class="col-sm-2"><?= $form->field($model, 'solvetime')->textInput(['type'=>'number','class' => 'form-control'])->label(false) ?></div>
                 </div>
-                <?= Html::submitButton('Закончить редактирование и сохранить задание', ['class' => 'btn btn-success', 'name'=>'submitb', 'value' => 'savekim']) ?>
+                <?= Html::submitButton('Закончить редактирование и сохранить задание', ['class' => 'btn btn-warning', 'name'=>'submitb', 'value' => 'savekim']) ?>
                 <?= Html::submitButton('Добавить упражнения', ['class' => 'btn btn-success pull-right', 'name'=>'submitb', 'value' => 'addtask']) ?>
                 <?= $form->field($model, 'theme_id',['options' => ['class' => 'hidden']]); ?>
                 <?php ActiveForm::end(); ?>
