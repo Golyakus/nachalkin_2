@@ -41,7 +41,7 @@ use yii\bootstrap\ActiveForm;
                     <div class="col-sm-2"><?= $form->field($model, 'solvetime')->textInput(['type'=>'number','class' => 'form-control'])->label(false) ?></div>
                 </div>
                 <?= Html::submitButton('Сохранить задание', ['class' => 'btn btn-success', 'name'=>'submitb', 'value' => 'savekim']) ?>
-                <?= Html::submitButton('Добавить упражнения', ['class' => 'btn btn-success', 'name'=>'submitb', 'value' => 'addtask']) ?>
+                <?= Html::submitButton('Добавить упражнения', ['class' => 'btn btn-success pull-right', 'name'=>'submitb', 'value' => 'addtask']) ?>
                 <?= $form->field($model, 'theme_id',['options' => ['class' => 'hidden']]); ?>
                 <?php ActiveForm::end(); ?>
             </div>
@@ -50,22 +50,23 @@ use yii\bootstrap\ActiveForm;
     <div class="col-lg-6 ">
                 <!-- WIP -->
         
-                <?php if (isset($dataProvider)): ?>
+                <?php if (isset($dataProvider) && ($dataProvider->getTotalCount() != 0)): ?>
                     <?php
-
                     foreach ($dataProvider->getModels() as $task)
                     {
                         ?>
 
 
                         <div class="panel panel-default">
-                            <div class="panel-body">
-
+                            <div class="panel-heading">
                                 <?= $task->max_score . " баллов" ?>
                                 <?= Html::a('удалить', 'deltask?id='.$task->id, ['class' => 'pull-right'])?>
+                            </div>
+                            <div class="panel-body">
+
+                                
                             <div class="row">
                                 <div class = "col-lg-10">
-                                    <span><?= $task->id . '.' ?></span>
                                     <?php
                                 //$form = ActiveForm::begin(['class'=>'col-lg-8']);
                                     $task->taskType->traverse(['model' => $task, 'form' => $form, 'action' => \app\utils\TaskType::RENDER_VIEW_ACTION]);
@@ -84,15 +85,17 @@ use yii\bootstrap\ActiveForm;
                             $count++;
                         }
                         ?>
-                    <?php endif ?>
+                    <span><?= "Максимальное количество баллов за $count упражнений - $totalScore "?></span>
+                    <?php else: {?>
+                    <h4>Пока нету добавленных упражнений</h4>    
+
+                    <?php }endif ?>
 
 
 
 
 
-                   <div class="row"><div class="col-offset-lg-2">
-                       <span><?= "Максимальное количество баллов за $count упражнений - $totalScore "?></span>
-                   </div></div>
+                   
                 <!-- WIP -->
     </div>
 </div> 
