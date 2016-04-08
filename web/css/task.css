@@ -16,3 +16,6 @@ margin-inline-start: 6px;
 margin-inline-end: 6px;
 box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
 }
+.edit-task-btn{
+margin-top:10px;
+}

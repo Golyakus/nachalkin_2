@@ -40,7 +40,7 @@ use yii\bootstrap\ActiveForm;
                     <label class="col-sm-3 control-label">Время выполнения задания</label>
                     <div class="col-sm-2"><?= $form->field($model, 'solvetime')->textInput(['type'=>'number','class' => 'form-control'])->label(false) ?></div>
                 </div>
-                <?= Html::submitButton('Сохранить задание', ['class' => 'btn btn-success', 'name'=>'submitb', 'value' => 'savekim']) ?>
+                <?= Html::submitButton('Закончить редактирование и сохранить задание', ['class' => 'btn btn-success', 'name'=>'submitb', 'value' => 'savekim']) ?>
                 <?= Html::submitButton('Добавить упражнения', ['class' => 'btn btn-success pull-right', 'name'=>'submitb', 'value' => 'addtask']) ?>
                 <?= $form->field($model, 'theme_id',['options' => ['class' => 'hidden']]); ?>
                 <?php ActiveForm::end(); ?>
@@ -59,7 +59,7 @@ use yii\bootstrap\ActiveForm;
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <?= $task->max_score . " баллов" ?>
+                                <?= $task->max_score . " баллов за задание" ?>
                                 <?= Html::a('удалить', 'deltask?id='.$task->id, ['class' => 'pull-right'])?>
                             </div>
                             <div class="panel-body">
@@ -72,7 +72,7 @@ use yii\bootstrap\ActiveForm;
                                     $task->taskType->traverse(['model' => $task, 'form' => $form, 'action' => \app\utils\TaskType::RENDER_VIEW_ACTION]);
                                 //ActiveForm::end();
                                     echo Html::submitButton('Редактировать упражнение', 
-                                        ['class' => 'btn btn-success', 'name'=>'edittask', 'value' => $task->id]
+                                        ['class' => 'edit-task-btn btn btn-success', 'name'=>'edittask', 'value' => $task->id]
                                         );          
                                         ?>
                                     </div>
