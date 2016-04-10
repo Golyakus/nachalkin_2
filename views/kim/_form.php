@@ -48,7 +48,6 @@ use yii\bootstrap\ActiveForm;
         </div>
     </div>
     <div class="col-lg-6 ">
-                <!-- WIP -->
         
                 <?php if (isset($dataProvider) && ($dataProvider->getTotalCount() != 0)): ?>
                     <?php
@@ -90,13 +89,6 @@ use yii\bootstrap\ActiveForm;
                     <h4>Пока нету добавленных упражнений</h4>    
 
                     <?php }endif ?>
-
-
-
-
-
-                   
-                <!-- WIP -->
     </div>
 </div> 
 
