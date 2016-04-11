@@ -43,7 +43,7 @@ use yii\bootstrap\ActiveForm;
                 <?= Html::submitButton('Закончить редактирование и сохранить задание', ['class' => 'btn btn-warning', 'name'=>'submitb', 'value' => 'savekim']) ?>
                 <?= Html::submitButton('Добавить упражнения', ['class' => 'btn btn-success pull-right', 'name'=>'submitb', 'value' => 'addtask']) ?>
                 <?= $form->field($model, 'theme_id',['options' => ['class' => 'hidden']]); ?>
-                <?php ActiveForm::end(); ?>
+                
             </div>
         </div>
     </div>
@@ -84,6 +84,7 @@ use yii\bootstrap\ActiveForm;
                             $count++;
                         }
                         ?>
+                    <?php ActiveForm::end(); ?>
                     <span><?= "Максимальное количество баллов за $count упражнений - $totalScore "?></span>
                     <?php else: {?>
                     <h4>Пока нету добавленных упражнений</h4>    
