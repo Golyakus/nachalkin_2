@@ -21,21 +21,20 @@
                 "reference": "cb5add6fd18abba567c4824a601f57b9a9e30e04",
                 "shasum": ""
             },
-            "type": "bower-asset-library",
-            "time": "2016-02-24 20:22:57"
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/blueimp-file-upload",
-            "version": "9.12.2",
+            "version": "9.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/blueimp/jQuery-File-Upload.git",
-                "reference": "444a7e7dfe8a3a382cd61fe60b576704a9a19df0"
+                "reference": "c72c93c3c005bbd0c849c2e35d01daaf7d23ee51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blueimp/jQuery-File-Upload/zipball/444a7e7dfe8a3a382cd61fe60b576704a9a19df0",
-                "reference": "444a7e7dfe8a3a382cd61fe60b576704a9a19df0",
+                "url": "https://api.github.com/repos/blueimp/jQuery-File-Upload/zipball/c72c93c3c005bbd0c849c2e35d01daaf7d23ee51",
+                "reference": "c72c93c3c005bbd0c849c2e35d01daaf7d23ee51",
                 "shasum": ""
             },
             "require": {
@@ -89,16 +88,16 @@
         },
         {
             "name": "bower-asset/blueimp-gallery",
-            "version": "v2.19.0",
+            "version": "v2.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/blueimp/Gallery.git",
-                "reference": "ac9d556b84dcc9f8d451b45976fcf13b45c438a1"
+                "reference": "441a4ac1f1d6a35fbc59b9ad08572d9ba124f310"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blueimp/Gallery/zipball/ac9d556b84dcc9f8d451b45976fcf13b45c438a1",
-                "reference": "ac9d556b84dcc9f8d451b45976fcf13b45c438a1",
+                "url": "https://api.github.com/repos/blueimp/Gallery/zipball/441a4ac1f1d6a35fbc59b9ad08572d9ba124f310",
+                "reference": "441a4ac1f1d6a35fbc59b9ad08572d9ba124f310",
                 "shasum": ""
             },
             "type": "bower-asset-library"
@@ -117,8 +116,7 @@
                 "reference": "eca5709e8d8ee037800e924b6ccb828bcfa82a6d",
                 "shasum": ""
             },
-            "type": "bower-asset-library",
-            "time": "2016-02-24 20:23:08"
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/blueimp-tmpl",
@@ -134,8 +132,7 @@
                 "reference": "14d8b68c1175033d4080600b907390cc89263380",
                 "shasum": ""
             },
-            "type": "bower-asset-library",
-            "time": "2016-02-24 20:23:22"
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/bootstrap",
