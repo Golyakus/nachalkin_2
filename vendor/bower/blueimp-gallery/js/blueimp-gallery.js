@@ -96,6 +96,8 @@
       titleProperty: 'title',
       // The list object property (or data attribute) with the object URL:
       urlProperty: 'href',
+      // The list object property (or data attribute) with the object srcset URL(s):
+      srcsetProperty: 'urlset',
       // The gallery listens for transitionend events before triggering the
       // opened and closed events, unless the following option is set to false:
       displayTransition: true,
@@ -110,6 +112,8 @@
       stretchImages: false,
       // Toggle the controls on pressing the Return key:
       toggleControlsOnReturn: true,
+      // Toggle the controls on slide click:
+      toggleControlsOnSlideClick: true,
       // Toggle the automatic slideshow interval on pressing the Space key:
       toggleSlideshowOnSpace: true,
       // Navigate the gallery by pressing left and right on the keyboard:
@@ -880,8 +884,10 @@
       } else if (parent.parentNode &&
         parent.parentNode === this.slidesContainer[0]) {
         // Click on displayed element
-        this.preventDefault(event)
-        this.toggleControls()
+        if (options.toggleControlsOnSlideClick) {
+          this.preventDefault(event)
+          this.toggleControls()
+        }
       }
     },
 
@@ -1001,14 +1007,18 @@
     createElement: function (obj, callback) {
       var type = obj && this.getItemProperty(obj, this.options.typeProperty)
       var factory = (type && this[type.split('/')[0] + 'Factory']) ||
-      this.imageFactory
+        this.imageFactory
       var element = obj && factory.call(this, obj, callback)
+      var srcset = this.getItemProperty(obj, this.options.srcsetProperty)
       if (!element) {
         element = this.elementPrototype.cloneNode(false)
         this.setTimeout(callback, [{
           type: 'error',
           target: element
         }])
+      }
+      if (srcset) {
+        element.setAttribute('srcset', srcset)
       }
       $(element).addClass(this.options.slideContentClass)
       return element
