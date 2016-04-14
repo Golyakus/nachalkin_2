@@ -1,5 +1,15 @@
 <?php
 
+/*
+return \yii\helpers\ArrayHelper::merge(
+	require (__DIR__ . '/environ/base.php' ), // base settings common for all types and tagets
+	require (__DIR__ . '/environ/web_base.php'),
+	require (__DIR__ . '/environ/local.php')
+);
+*/
+
+
+
 $params = require(__DIR__ . '/params.php');
 
 $config = [
@@ -22,6 +32,7 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+/*
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set
@@ -29,6 +40,7 @@ $config = [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+*/
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

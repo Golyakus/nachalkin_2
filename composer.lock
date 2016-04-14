@@ -21,7 +21,8 @@
                 "reference": "cb5add6fd18abba567c4824a601f57b9a9e30e04",
                 "shasum": ""
             },
-            "type": "bower-asset-library"
+            "type": "bower-asset-library",
+            "time": "2016-02-24 20:22:57"
         },
         {
             "name": "bower-asset/blueimp-file-upload",
@@ -108,15 +109,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/blueimp/JavaScript-Load-Image.git",
-                "reference": "eca5709e8d8ee037800e924b6ccb828bcfa82a6d"
+                "reference": "da2e77837e81a2a0a143a77034dc01604173790a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blueimp/JavaScript-Load-Image/zipball/eca5709e8d8ee037800e924b6ccb828bcfa82a6d",
-                "reference": "eca5709e8d8ee037800e924b6ccb828bcfa82a6d",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Load-Image/zipball/da2e77837e81a2a0a143a77034dc01604173790a",
+                "reference": "da2e77837e81a2a0a143a77034dc01604173790a",
                 "shasum": ""
             },
-            "type": "bower-asset-library"
+            "type": "bower-asset-library",
+            "time": "2016-03-21 15:49:39"
         },
         {
             "name": "bower-asset/blueimp-tmpl",
@@ -124,15 +126,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/blueimp/JavaScript-Templates.git",
-                "reference": "14d8b68c1175033d4080600b907390cc89263380"
+                "reference": "9dc414739a4d23663018575c5036b88e0de2ba4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blueimp/JavaScript-Templates/zipball/14d8b68c1175033d4080600b907390cc89263380",
-                "reference": "14d8b68c1175033d4080600b907390cc89263380",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Templates/zipball/9dc414739a4d23663018575c5036b88e0de2ba4d",
+                "reference": "9dc414739a4d23663018575c5036b88e0de2ba4d",
                 "shasum": ""
             },
-            "type": "bower-asset-library"
+            "type": "bower-asset-library",
+            "time": "2016-04-11 21:26:22"
         },
         {
             "name": "bower-asset/bootstrap",
@@ -225,12 +228,12 @@
             "version": "1.11.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "1472290917f17af05e98007136096784f9051fab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery/zipball/1472290917f17af05e98007136096784f9051fab",
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/1472290917f17af05e98007136096784f9051fab",
                 "reference": "1472290917f17af05e98007136096784f9051fab",
                 "shasum": ""
             },
@@ -365,16 +368,16 @@
         },
         {
             "name": "bower-asset/yii2-pjax",
-            "version": "dev-master",
+            "version": "v2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/jquery-pjax.git",
-                "reference": "9c8ed9fa38442d619818185ccffb04f2988d0022"
+                "reference": "60728da6ade5879e807a49ce59ef9a72039b8978"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/9c8ed9fa38442d619818185ccffb04f2988d0022",
-                "reference": "9c8ed9fa38442d619818185ccffb04f2988d0022",
+                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/60728da6ade5879e807a49ce59ef9a72039b8978",
+                "reference": "60728da6ade5879e807a49ce59ef9a72039b8978",
                 "shasum": ""
             },
             "require": {
@@ -391,10 +394,7 @@
                     "vendor/",
                     "script/",
                     "test/"
-                ],
-                "branch-alias": {
-                    "dev-master": "2.0.3-dev"
-                }
+                ]
             },
             "license": [
                 "MIT"
@@ -615,12 +615,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "2ab0b5387e406d75880d12265a54446366f4de41"
+                "reference": "8d668e3aa672b6d71c79b4e12a7b7f022a0a6d7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/2ab0b5387e406d75880d12265a54446366f4de41",
-                "reference": "2ab0b5387e406d75880d12265a54446366f4de41",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/8d668e3aa672b6d71c79b4e12a7b7f022a0a6d7b",
+                "reference": "8d668e3aa672b6d71c79b4e12a7b7f022a0a6d7b",
                 "shasum": ""
             },
             "require": {
@@ -701,7 +701,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2016-04-11 16:39:50"
+            "time": "2016-04-13 13:23:16"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -923,12 +923,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "cd406c69d7fcf8bbc4760622778579a676dc0626"
+                "reference": "0b7eb271ba4785beb1184c6b09d3349065a2b426"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/cd406c69d7fcf8bbc4760622778579a676dc0626",
-                "reference": "cd406c69d7fcf8bbc4760622778579a676dc0626",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/0b7eb271ba4785beb1184c6b09d3349065a2b426",
+                "reference": "0b7eb271ba4785beb1184c6b09d3349065a2b426",
                 "shasum": ""
             },
             "require": {
@@ -962,7 +962,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2016-04-11 12:13:53"
+            "time": "2016-04-11 22:39:53"
         },
         {
             "name": "yiisoft/yii2-gii",

@@ -33,3 +33,6 @@ phpunit.phar
 /web/uploads/*
 /web/runtime/*
 /vendor
+# ignore db.php since it should be compied from environ-samples
+/config/db.h
+#ignore db.
