@@ -174,13 +174,12 @@ class Task extends \yii\db\ActiveRecord
     {
     	$model = self::findModel($taskId);
     	$newModel = new Task();
-    	$newModel->created_by = $newModel->created_by = $model->created_by;
+    	$newModel->created_by = $newModel->updated_by = $model->created_by;
     	$newModel->max_score = $model->max_score;
     	$newModel->content = $model->content;
     	$newModel->struct_type = $model->struct_type;
     	$newModel->theme_id = $themeId;
-    	$newModel->created_at = $model->created_at;
-    	$newModel->updated_by = 'igor'; // TODO:: userId
+    	$newModel->created_at = $model->created_at;	
     	$newModel->loadType();
     	//$$newModel->updated_at = $model->updated_at;
     	if (!$newModel->save())

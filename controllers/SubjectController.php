@@ -26,6 +26,16 @@ class SubjectController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+			'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+					[
+                        'actions' => ['create', 'update', 'delete', 'index', 'view'],
+                        'allow' => true,
+                        'roles' => ['admin'],	
+					]
+                ],
+            ],			
         ];
     }
 

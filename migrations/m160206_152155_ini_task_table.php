@@ -9,7 +9,7 @@ class m160206_152155_ini_task_table extends Migration
 		$this->createTable("task", 
 		[ 'id'=>'pk',
 		  'created_at'=>'timestamp',
-		  'created_by'=>'string NOT NULL',
+		  'created_by'=>'int(11) NOT NULL',
 		  'content'=>'text NOT NULL'
 		]		
 		);

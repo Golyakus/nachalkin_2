@@ -10,43 +10,43 @@ class m160330_172353_populate_math extends Migration
 		$id = 1; // математика 4 класс
 		$th = "'Описание темы Геометрия'"; // должен быть id=6
     	$sql = "INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','Геометрия', $th, $id)";
+		") VALUES (NOW(),102,102,'Геометрия', $th, $id)";
 
      	\Yii::$app->db->createCommand($sql)->execute();  
 
 		$th = "'Описание темы Дроби'";
      	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','Дроби', $th, $id)")->execute(); 
+		") VALUES (NOW(),102,102,'Дроби', $th, $id)")->execute(); 
 		$th = "'Описание темы Движение'";
      	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','Движение', $th, $id)")->execute();   	
+		") VALUES (NOW(),102,102,'Движение', $th, $id)")->execute();   	
 		$th = "'Описание темы Уравнения'";
      	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','Уравнения', $th, $id)")->execute(); 
+		") VALUES (NOW(),102,102,'Уравнения', $th, $id)")->execute(); 
 
 		// Вставляем темы 2 уровня в геометрию (id=6)
 		$id = 6;
 		$th = "'Описание темы Периметр и площади'"; // должен быть id=10
      	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','Периметр и площади', $th, $id)")->execute();
+		") VALUES (NOW(),102,102,'Периметр и площади', $th, $id)")->execute();
  
 		$th = "'Описание темы Задачи с окружностью'";
      	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','Задачи с окружностью', $th, $id)")->execute(); 
+		") VALUES (NOW(),102,102,'Задачи с окружностью', $th, $id)")->execute(); 
 
 		// Вставляем темы 3 уровня в Периметр и площади (id=10)
 		$id = 10;
 		$th = "'Описание темы По стороне ищем периметр'"; // должен быть id=12
      	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','По стороне ищем периметр', $th, $id)")->execute();
+		") VALUES (NOW(),102,102,'По стороне ищем периметр', $th, $id)")->execute();
  
 		$th = "'Описание темы По полупериметру ищем периметр'";
      	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','По полупериметру ищем периметр', $th, $id)")->execute(); 
+		") VALUES (NOW(),102,102,'По полупериметру ищем периметр', $th, $id)")->execute(); 
 
 		$th = "'Описание темы По периметру ищем сторону'";
      	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','По периметру ищем сторону', $th, $id)")->execute(); 
+		") VALUES (NOW(),102,102,'По периметру ищем сторону', $th, $id)")->execute(); 
 
 		// Вставляем задачи в  По стороне ищем периметр (id=12)
 		$this->addTasks(12);
@@ -67,7 +67,7 @@ class m160330_172353_populate_math extends Migration
     private function addTasks($id)
     {
     	
-    	$user = "'igor'";
+    	$user = "102";
     	$score = 10;
     	$type = "input";
     	$content = <<<XML
@@ -87,7 +87,7 @@ XML;
     	"(NOW(), $user, '$content', $user, $score, '$type' ,$id)";
     	\Yii::$app->db->createCommand($sql)->execute();
 
-    	$user = "'igor'";
+    	$user = "102";
     	$score = 10;
     	$type = "check";
     	$content = <<<XML
@@ -107,7 +107,7 @@ XML;
       "(NOW(), $user, '$content', $user, $score, '$type' ,$id)";
       \Yii::$app->db->createCommand($sql)->execute();
 
-    	$user = "'igor'";
+    	$user = "102";
     	$score = 10;
     	$type = "dropdown";
     	$content = <<<XML
@@ -132,7 +132,7 @@ XML;
       "(NOW(), $user, '$content', $user, $score, '$type' ,$id)";
       \Yii::$app->db->createCommand($sql)->execute();
 
-    	$user = "'igor'";
+    	$user = "102";
     	$score = 10;
     	$type = "radio";
     	$content = <<<XML

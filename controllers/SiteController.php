@@ -16,21 +16,33 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                //'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'error', 'contact', 'about'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                ],
+                    [
+                        'actions' => ['login', 'error', 'contact', 'about'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],               
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['teacher'],
+                    ],               
+				],
             ],
+/*
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
                 ],
             ],
+*/
         ];
     }
 
@@ -49,6 +61,8 @@ class SiteController extends Controller
 
     public function actionIndex($subjectId=1)
     {
+		if (\Yii::$app->user->isGuest)
+			return $this->redirect('/site/login');
         $subjectModel = \app\models\Subject::findOne($subjectId);
         if (!$subjectModel)
             throw new \yii\web\NotFoundHttpException("Subject with id=$subjectId not found");

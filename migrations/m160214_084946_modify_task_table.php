@@ -7,7 +7,7 @@ class m160214_084946_modify_task_table extends Migration
     public function up()
     {
 		$this->addColumn('task', 'updated_at', 'timestamp');
-		$this->addColumn('task', 'updated_by', 'string NOT NULL');
+		$this->addColumn('task', 'updated_by', 'int(11) NOT NULL');
 		$this->addColumn('task', 'max_score', 'string NOT NULL');
 		$this->addColumn('task', 'struct_type', 'string NOT NULL');
 		return true;

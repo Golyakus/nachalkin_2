@@ -40,15 +40,15 @@ class PopulateController extends Controller
     {
     	// добавление главной темы (без родителя) - соответствует предмету для какого-либо класса
     	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description` " .
-		") VALUES (NOW(),'igor','igor','Русский язык','')")->execute();
+		") VALUES (NOW(),102,102,'Русский язык','')")->execute();
 		
     	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description` " .
-		") VALUES (NOW(),'igor','igor','Метапредметность','')")->execute();
+		") VALUES (NOW(),102,102,'Метапредметность','')")->execute();
 		echo "Main themes inserted....\n";
 		\Yii::$app->db->createCommand("INSERT INTO `subject`(`created_at`, `created_by`, `updated_by`, `class`, `theme_id`)".
-		" VALUES (NOW(),'igor','igor','4 класс',2)")->execute();
+		" VALUES (NOW(),102,102,'4 класс',2)")->execute();
 		\Yii::$app->db->createCommand("INSERT INTO `subject`(`created_at`, `created_by`, `updated_by`, `class`, `theme_id`)".
-		" VALUES (NOW(),'igor','igor','4 класс',3)")->execute();
+		" VALUES (NOW(),102,102,'4 класс',3)")->execute();
 		echo "Subjects inserted....\n";
     }
 
@@ -57,19 +57,19 @@ class PopulateController extends Controller
     	
     	$th = "'Описание темы 1'";
     	$sql = "INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','Тема 1', $th, $id)";
+		") VALUES (NOW(),102,102,'Тема 1', $th, $id)";
 
      	\Yii::$app->db->createCommand($sql)->execute();  
 
 		$th = "'Описание темы 2'";
      	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','Тема 2', $th, $id)")->execute(); 
+		") VALUES (NOW(),102,102,'Тема 2', $th, $id)")->execute(); 
 		$th = "'Описание темы 3'";
      	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','Тема 3', $th, $id)")->execute();   	
+		") VALUES (NOW(),102,102,'Тема 3', $th, $id)")->execute();   	
 		$th = "'Описание темы 4'";
      	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description`, `parent` " .
-		") VALUES (NOW(),'igor','igor','Тема 4', $th, $id)")->execute(); 
+		") VALUES (NOW(),102,102,'Тема 4', $th, $id)")->execute(); 
 		 
 		echo "Themes inserted into theme $id \n";  	
     }
@@ -77,7 +77,7 @@ class PopulateController extends Controller
     public function actionTasks($id)
     {
     	
-    	$user = "'igor'";
+    	$user = "102";
     	$score = 10;
     	$type = "input";
     	$content = <<<XML
@@ -97,7 +97,7 @@ XML;
     	"(NOW(), $user, '$content', $user, $score, '$type' ,$id)";
     	\Yii::$app->db->createCommand($sql)->execute();
 
-    	$user = "'igor'";
+    	$user = "102";
     	$score = 10;
     	$type = "check";
     	$content = <<<XML
@@ -117,7 +117,7 @@ XML;
       "(NOW(), $user, '$content', $user, $score, '$type' ,$id)";
       \Yii::$app->db->createCommand($sql)->execute();
 
-    	$user = "'igor'";
+    	$user = "102";
     	$score = 10;
     	$type = "dropdown";
     	$content = <<<XML
@@ -142,7 +142,7 @@ XML;
       "(NOW(), $user, '$content', $user, $score, '$type' ,$id)";
       \Yii::$app->db->createCommand($sql)->execute();
 
-    	$user = "'igor'";
+    	$user = "102";
     	$score = 10;
     	$type = "radio";
     	$content = <<<XML

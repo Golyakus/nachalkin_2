@@ -26,6 +26,26 @@ class TaskController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+			'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+					[
+                        'actions' => ['index', 'view', 'update', 'actionUpdatekim'],
+                        'allow' => true,
+                        'roles' => ['teacher'],	
+					],
+					[
+                        'actions' => ['create', 'delete', 'choosetype' , 'newtask'],
+                        'allow' => true,
+                        'roles' => ['admin-teacher'],	
+					],
+[					[
+                        'actions' => ['solverand', 'solve'],
+                        'allow' => true,
+                        'roles' => ['pupil'],	
+					]
+                ],
+            ],			
         ];
     }
 
@@ -64,7 +84,7 @@ class TaskController extends Controller
     public function actionCreate($type,$subjectId,$themeId)
     {
         $model = new Task();
-		$model->created_by = $model->updated_by = 'igor';
+		$model->created_by = $model->updated_by = \Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -84,6 +104,7 @@ class TaskController extends Controller
     public function actionUpdate($id, $subjectId)
     {
         $model = $this->findModel($id);
+		self::checkAccess($model);
 		$themeId = $model->theme_id;
 		$theme = static::getThemeParams($subjectId, $themeId); 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -95,18 +116,27 @@ class TaskController extends Controller
         }
     }
 
+	private static function checkAccess($model)
+	{
+		if (!\Yii::$app->user->can('admin') && $model->updated_by != \Yii::$app->user->id && $model->created_by != \Yii::$app->user->id )
+			throw new \yii\web\ForbiddenHttpException('Вы не авторизованы для выполнения этого действия');
+	}
+
     public function actionUpdatekim($id, $subjectId)
     {
         $model = $this->findModel($id);
         $themeId = $model->theme_id;
-        $kim_id = \app\models\Kim::find()->where(['theme_id' => $themeId])->select('id')->one();
+        $kim = \app\models\Kim::find()->where(['theme_id' => $themeId])->one();
+		if (!\Yii::$app->user->can('admin') && $kim->created_by !=  \Yii::$app->user->id)
+			throw new ForbiddenHttpException('Вы не авторизованы для изменения этого КИМ');
+		$model->updated_by = \Yii::$app->user->id;
         $theme = static::getThemeParams($subjectId, $themeId); 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/kim/update?id=' . $kim_id['id']]);
+            return $this->redirect(['/kim/update?id=' . $kim->id]);
         } else {
             $params['invitation'] = 'Редактирование упражнения' . " в задании «" . $theme['subtheme'] . "»";
             $params['action'] = \app\utils\TaskType::RENDER_EDIT_ACTION; 
-            $theme['subthemeUrl'] = '/kim/update?id=' . $kim_id['id'];      
+            $theme['subthemeUrl'] = '/kim/update?id=' . $kim->id];      
             return $this->render('update', compact('model', 'theme', 'params'));
         }
     }
@@ -118,7 +148,9 @@ class TaskController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+		$model = $this->findModel($id);
+		self::checkAccess($model);
+        $model->delete();
 
         return $this->redirect(['index']);
     }
@@ -161,14 +193,14 @@ class TaskController extends Controller
 		$model = new Task();
 		$model->setType($type);
 		$model->loadFromPrototype();
-		$model->created_by = $model->updated_by = 'igor';
+		$model->created_by = $model->updated_by = \Yii::$app->user->id;
 		$model->theme_id = $themeId;
 		$theme = static::getThemeParams($subjectId, $themeId); 
         if ($model->load(Yii::$app->request->post())) {
 			$params['invitation'] = 'Просмотрите упражнение перед сохранением';			
 			$params['action'] = \app\utils\TaskType::RENDER_VIEW_ACTION;
        	} else if (isset(\Yii::$app->request->post()[\app\models\Task::SAVE_SUBMIT_BUTTON])) {
-			$model->created_by = $model->updated_by = 'igor';
+			$model->created_by = $model->updated_by = \Yii::$app->user->id;
 			$model->content = \Yii::$app->request->post()[\app\models\Task::SAVE_SUBMIT_BUTTON];
 			if ($model->save())
             	return $this->redirect(["task/choosetype/$subjectId/$themeId"]);
@@ -251,7 +283,7 @@ class TaskController extends Controller
     public function actionSolverand($themeId)
     {
     	// TODO:    	
-    	// select * from Task where Task.theme_id = $themeId and Task.id NOT IN (select task_id from Taskresult where Taskresult.user_id = 102 and not Taskresult.score is null)
+    	// select * from Task where Task.theme_id = $themeId and Task.id NOT IN (select task_id from Taskresult where Taskresult.user_id = \Yii::$app->user->id and not Taskresult.score is null)
     	// now select only tasks
     	$q = \app\models\Task::getTasksForTheme($themeId)->select('id')->asArray();
 
@@ -279,7 +311,7 @@ class TaskController extends Controller
 
     private function solveTask($id)
     {
-    	$model = \app\models\Taskresult::getModelByTask($id, 102);
+    	$model = \app\models\Taskresult::getModelByTask($id, \Yii::$app->user->id);
     	$taskModel = \app\models\Task::findModel($model->task_id);
         $taskModel->prepareForSolving();
         $score = $taskModel->checkAnswer(Yii::$app->request->post());
@@ -291,7 +323,7 @@ class TaskController extends Controller
     		if (!$model->save())
                 \Yii::trace("Error saving task result....", 'info');
     		//return false;
-return $this->render('solve', compact('model', 'taskModel'));
+			return $this->render('solve', compact('model', 'taskModel'));
     	}
     	return $this->render('solve', compact('model', 'taskModel'));
     }

@@ -26,6 +26,16 @@ class ThemeController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+			'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+					[
+                        'actions' => ['description', 'list', 'create', 'update', 'delete', 'index', 'view'],
+                        'allow' => true,
+                        'roles' => ['admin-teacher'],	
+					]
+                ],
+            ],			
         ];
     }
 
@@ -44,7 +54,7 @@ class ThemeController extends Controller
 
     public function actionList($subjectId)
     {
-        $themeTree = \app\models\Subject::getThemeTree($subjectId, 102);
+        $themeTree = \app\models\Subject::getThemeTree($subjectId, \Yii::$app->user->id);
         //$themeTree->print_r();
         //$themeId = \app\models\Subject::findModel($subjectId)->id;
         $dataProvider = new \yii\data\ArrayDataProvider([
@@ -94,7 +104,7 @@ class ThemeController extends Controller
     {
         $model = new Theme();
 		$model->parent = $parentId;
-		$model->created_by = $model->updated_by = 'igor';
+		$model->created_by = $model->updated_by = \Yii::$app->user->id;
 		// TODO: add TimestampBehavior!!!
 		date_default_timezone_set('Europe/Moscow');
 		$curTime = new \DateTime();

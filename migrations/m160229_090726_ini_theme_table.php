@@ -34,9 +34,9 @@ class m160229_090726_ini_theme_table extends Migration
 		$this->createTable("theme", 
 		[ 'id'=>'pk',
 		  'created_at'=>'datetime not NULL',
-		  'created_by'=>'string NOT NULL',
+		  'created_by'=>'int(11) NOT NULL',
 		  'updated_at'=>'timestamp',
-		  'updated_by'=>'string NOT NULL',
+		  'updated_by'=>'int(11) NOT NULL',
 		  'title' => 'string',
 		  'description'=>'text',
 		  'parent' => 'int(11)',
@@ -46,40 +46,40 @@ class m160229_090726_ini_theme_table extends Migration
 		$curTime = new DateTime();
 		$curTime = $curTime->format('Y-m-d H:i:s');
 		$this->insert('theme', 
-			['created_by'=>'igor', 
-			'updated_by'=>'igor', 
+			['created_by'=>'102', 
+			'updated_by'=>'102', 
 			'created_at'=> $curTime,
 			'title'=>'Математика, 4 класс',
 			'description'=>'',
 		]);
 
 		$this->insert('theme', 
-			['created_by'=>'igor', 
-			'updated_by'=>'igor', 
+			['created_by'=>'102', 
+			'updated_by'=>'102', 
 			'created_at'=> $curTime,
 			'title'=>'Русский язык, 4 класс',
 			'description'=>'',
 		]);
 
 		$this->insert('theme', 
-			['created_by'=>'igor', 
-			'updated_by'=>'igor', 
+			['created_by'=>'102', 
+			'updated_by'=>'102', 
 			'created_at'=> $curTime,
 			'title'=>'Метапредметность, 4 класс',
 			'description'=>'',
 		]);
 
 		$this->insert('theme', 
-			['created_by'=>'igor', 
-			'updated_by'=>'igor', 
+			['created_by'=>'102', 
+			'updated_by'=>'102', 
 			'created_at'=> $curTime,
 			'title'=>'Математика, 5 класс',
 			'description'=>'',
 		]);
 
 		$this->insert('theme', 
-			['created_by'=>'igor', 
-			'updated_by'=>'igor', 
+			['created_by'=>'102', 
+			'updated_by'=>'102', 
 			'created_at'=> $curTime,
 			'title'=>'Русский язык, 5 класс',
 			'description'=>'',

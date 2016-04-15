@@ -9,9 +9,9 @@ class m160229_093425_ini_subject_table extends Migration
 		$this->createTable("subject", 
 		[ 'id'=>'pk',
 		  'created_at'=>'datetime not NULL',
-		  'created_by'=>'string NOT NULL',
+		  'created_by'=>'int(11) NOT NULL',
 		  'updated_at'=>'timestamp',
-		  'updated_by'=>'string NOT NULL',
+		  'updated_by'=>'int(11) NOT NULL',
 		  'class' => 'string not NULL',
 		  'theme_id' => 'int(11) not NULL',
 		  'domain_id' => 'int(11) not null',
@@ -26,8 +26,8 @@ class m160229_093425_ini_subject_table extends Migration
 		$curTime = new DateTime();
 		$curTime = $curTime->format('Y-m-d H:i:s');
 		$this->insert('subject', 
-			['created_by'=>'igor', 
-			'updated_by'=>'igor', 
+			['created_by'=>'102', 
+			'updated_by'=>'102', 
 			'created_at'=> $curTime,
 			'theme_id'=> 1,
 			'class'=> '4 класс',
@@ -35,8 +35,8 @@ class m160229_093425_ini_subject_table extends Migration
 		]);
 
 		$this->insert('subject', 
-			['created_by'=>'igor', 
-			'updated_by'=>'igor', 
+			['created_by'=>'102', 
+			'updated_by'=>'102', 
 			'created_at'=> $curTime,
 			'theme_id'=> 2,
 			'class'=> '4 класс',
@@ -44,8 +44,8 @@ class m160229_093425_ini_subject_table extends Migration
 		]);
 
 		$this->insert('subject', 
-			['created_by'=>'igor', 
-			'updated_by'=>'igor', 
+			['created_by'=>'102', 
+			'updated_by'=>'102', 
 			'created_at'=> $curTime,
 			'theme_id'=> 3,
 			'class'=> '4 класс',
@@ -53,8 +53,8 @@ class m160229_093425_ini_subject_table extends Migration
 		]);
 
 		$this->insert('subject', 
-			['created_by'=>'igor', 
-			'updated_by'=>'igor', 
+			['created_by'=>'102', 
+			'updated_by'=>'102', 
 			'created_at'=> $curTime,
 			'theme_id'=> 4,
 			'class'=> '5 класс',
@@ -62,8 +62,8 @@ class m160229_093425_ini_subject_table extends Migration
 		]);
 
 		$this->insert('subject', 
-			['created_by'=>'igor', 
-			'updated_by'=>'igor', 
+			['created_by'=>'102', 
+			'updated_by'=>'102', 
 			'created_at'=> $curTime,
 			'theme_id'=> 5,
 			'class'=> '5 класс',

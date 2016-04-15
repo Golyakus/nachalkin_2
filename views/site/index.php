@@ -53,7 +53,7 @@ if (!$firstSubthemeModel) $firstSubthemeModel = $model;
    			
    			<div id="nestable" class="dd">
    				<?php
-   					generateNestable(\app\models\Subject::getThemeTree($subjectId, 102));
+   					generateNestable(\app\models\Subject::getThemeTree($subjectId, \Yii::$app->user->id));
    				?>
    			</div>
         

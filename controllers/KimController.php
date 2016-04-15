@@ -26,6 +26,16 @@ class KimController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+			'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+					[
+                        'actions' => ['index', 'view', 'description', 'create', 'update', 'delete', 'deltask', 'delt', 'tasklist', 'addtask'],
+                        'allow' => true,
+                        'roles' => ['teacher'],	
+					]
+                ],
+            ],			
         ];
     }
 
@@ -65,14 +75,14 @@ class KimController extends Controller
     {
         $model = new Kim();
         $model->subject_id = $subjectId;
-        $model->created_by = $model->updated_by = 102;
+        $model->created_by = $model->updated_by = \Yii::$app->user->id;
         $model->status = \app\models\Kim::KIM_STATUS_DRAFT;
         $post = Yii::$app->request->post();
         $model->created_at = $model->updated_at = (new \DateTime())->format('Y-m-d H:i:s');
         $model->solvetime = 30;
         if ($model->load($post)) 
         {
-            $themeModel = \app\models\Theme::makeEmptyTheme('igor'); // TODO:: change to userId
+            $themeModel = \app\models\Theme::makeEmptyTheme(\Yii::$app->user->id);
             $model->theme_id = $themeModel->id;
 
             return $this->processPostKimRequest($post, $model);
@@ -109,6 +119,12 @@ class KimController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
     }
 
+	private static function checkAccess($model)
+	{
+		if (!\Yii::$app->user->can('admin') && $model->updated_by != \Yii::$app->user->id && $model->created_by != \Yii::$app->user->id )
+			throw new \yii\web\ForbiddenHttpException('Вы не авторизованы для выполнения этого действия');
+	}
+
     public function actionAddtask($id)
     {
         
@@ -118,6 +134,7 @@ class KimController extends Controller
             $this->redirect("update?id=" . $id);
         } else {
             $model = $this->findModel($id);
+			self::checkAccess($model);
             return $this->render('addtask', ['model' => $model]);        
         }            
     }
@@ -141,6 +158,8 @@ class KimController extends Controller
         }
         return $retval;
     }
+
+	
 
     /**
      * returns html snippet with list of tasks for KIM or theme for AJAX GET request
@@ -172,6 +191,7 @@ class KimController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+		self::checkAccess($model);
         $post = Yii::$app->request->post();
         if ($model->load($post)) {
             return $this->processPostKimRequest($post, $model);
@@ -194,7 +214,9 @@ class KimController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+		$model = $this->findModel($id);
+		self::checkAccess($model);
+        $model->delete();
 
         return $this->redirect(['index']);
     }

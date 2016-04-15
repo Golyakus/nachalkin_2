@@ -18,6 +18,10 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+		'authManager' => [
+			'class' => '\yii\rbac\DbManager',
+			'defaultRoles' => ['guest'],
+		],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'aj94rtJ8xEaXRadSJSm49FrVDUvMhpwi',
