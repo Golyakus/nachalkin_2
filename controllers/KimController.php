@@ -136,7 +136,7 @@ class KimController extends Controller
     /**
      * returns html snippet with theme description for AJAX GET request
     */
-    public function actionDescription($id)
+    public function actionDescription($id, $subjectId)
     {
         $model = \app\models\Theme::findOne($id);
         return $this->renderPartial('_description', ['model' => $model]);
