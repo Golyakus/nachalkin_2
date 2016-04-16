@@ -43,14 +43,18 @@ use yii\bootstrap\ActiveForm;
                 <?= Html::submitButton('Закончить редактирование и сохранить задание', ['class' => 'btn btn-warning', 'name'=>'submitb', 'value' => 'savekim']) ?>
                 <?= Html::submitButton('Добавить упражнения', ['class' => 'btn btn-success pull-right', 'name'=>'submitb', 'value' => 'addtask']) ?>
                 <?= $form->field($model, 'theme_id',['options' => ['class' => 'hidden']]); ?>
-                
+                 <?php $form = ActiveForm::end(); ?>
             </div>
         </div>
     </div>
     <div class="col-lg-6 ">
-        
-                <?php if (isset($dataProvider) && ($dataProvider->getTotalCount() != 0)): ?>
+  				        
+               	 <?php if (isset($dataProvider) && ($dataProvider->getTotalCount() != 0)): ?>
                     <?php
+                    $form = ActiveForm::begin([
+                    'id' => 'kim-form-2',
+                    'options' => ['class' => 'form-horizontal'],]
+                    ); 
                     foreach ($dataProvider->getModels() as $task)
                     {
                         ?>
@@ -84,10 +88,11 @@ use yii\bootstrap\ActiveForm;
                             $count++;
                         }
                         ?>
+                    <?= $form->field($model, 'theme_id',['options' => ['class' => 'hidden']]); ?>
                     <?php ActiveForm::end(); ?>
                     <span><?= "Максимальное количество баллов за $count упражнений - $totalScore "?></span>
                     <?php else: {?>
-                    <h4>Пока нету добавленных упражнений</h4>    
+                    <h4>Пока нет добавленных упражнений</h4>    
 
                     <?php }endif ?>
     </div>

@@ -53,12 +53,16 @@ class Kim extends \yii\db\ActiveRecord
     {
         return [
             [['created_at', 'created_by', 'updated_by', 'theme_id', 'subject_id', 'solvetime'], 'required'],
-            [['title', 'description'], 'safe'],
+            [['created_at', 'updated_at'], 'safe'],
             [['created_by', 'updated_by', 'theme_id', 'subject_id', 'status', 'solvetime'], 'integer'],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::className(), 'targetAttribute' => ['subject_id' => 'id']],
             [['theme_id'], 'exist', 'skipOnError' => true, 'targetClass' => Theme::className(), 'targetAttribute' => ['theme_id' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
+
+			[['title','description'], 'safe']
         ];
-    }
+     }
 
     /**
      * @inheritdoc
@@ -114,11 +118,13 @@ class Kim extends \yii\db\ActiveRecord
 
     private function updateTheme($themeModel)
     {
+\Yii::trace($themeModel->title, $this->title);
+\Yii::trace($themeModel->description, $this->description);
         if($themeModel->title != $this->title || $themeModel->description != $this->description)
         {
             $themeModel->title = $this->title;
             $themeModel->description = $this->description;
-            $themeModel->updated_by = (string)($this->updated_by);            
+            $themeModel->updated_by = $this->updated_by;            
         }
     }
 
@@ -133,9 +139,9 @@ class Kim extends \yii\db\ActiveRecord
 
     public function afterSave($insert, $changedAttributes)
     {
-        parent::afterSave($insert, $changedAttributes);
-        $themeModel = $this->getTheme()->one();
-        $this->updateTheme($themeModel);      
+		$themeModel = $this->getTheme()->one();
+        $this->updateTheme($themeModel);  
+        parent::afterSave($insert, $changedAttributes);      
         if(!$themeModel->save())
             throw new \yii\base\UserException(" Error updating theme while saving KIM " . $this->id);
     }
@@ -157,5 +163,14 @@ class Kim extends \yii\db\ActiveRecord
         \Yii::trace($this->theme_id, $this->id);
         return Task::find()->andWhere(['theme_id' => $this->theme_id])->count();
     }
+
+	public function initialPopulate($subjectId)
+	{
+		$this->subject_id = $subjectId;
+        $this->created_by = $this->updated_by = \Yii::$app->user->id;
+        $this->status = \app\models\Kim::KIM_STATUS_DRAFT;
+		$this->created_at = $this->updated_at = (new \DateTime())->format('Y-m-d H:i:s');
+        $this->solvetime = 30;	
+	}
 
 }

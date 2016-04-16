@@ -56,11 +56,12 @@ class Taskresult extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'task_id'], 'required'],
+            [[/*'created_at',*/ 'user_id', 'task_id'], 'required'],
            // [['created_at', 'updated_at'], 'safe'],
             [['user_id', 'task_id', 'num_tries'], 'integer'],
             [['score'], 'string', 'max' => 255],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 

@@ -42,10 +42,10 @@ class ThemeController extends Controller
     /**
      * returns html snippet with theme description for AJAX GET request
     */
-    public function actionDescription($id)
+    public function actionDescription($id, $subjectId)
     {
         $model = $this->findModel($id);
-        return $this->renderPartial('_description', ['model' => $model]);
+        return $this->renderPartial('_description', compact('model','subjectId'));
     }
 
     /**

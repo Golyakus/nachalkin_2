@@ -126,21 +126,16 @@ class Task extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return //array_merge(
-		  [
-           // [['created_at'], 'safe'],
-           // [['updated_at'], 'safe'],
-			[['taskType'], 'safe'],
+      	return [
+            //[['created_at', 'updated_at'], 'safe'],
             [['created_by', 'content', 'updated_by', 'max_score', 'struct_type', 'theme_id'], 'required'],
+            [['created_by', 'updated_by', 'theme_id'], 'integer'],
             [['content'], 'string'],
-            [['theme_id'], 'integer'],
-            [['created_by'], 'string', 'max' => 255],
- 			[['updated_by'], 'string', 'max' => 255], 
-			[['max_score'], 'string', 'max' => 255],
-			[['struct_type'], 'string', 'max' => 32],
-         ]
-		//, $this->getBehaviors()['tasktype']->getRules())
-		;
+            [['max_score', 'struct_type'], 'string', 'max' => 255],
+            [['theme_id'], 'exist', 'skipOnError' => true, 'targetClass' => Theme::className(), 'targetAttribute' => ['theme_id' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
+        ];
     }
 
     /**

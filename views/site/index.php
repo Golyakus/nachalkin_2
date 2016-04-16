@@ -62,7 +62,7 @@ if (!$firstSubthemeModel) $firstSubthemeModel = $model;
 		<div class="col-lg-offset-1 col-lg-7">
 			
 			<h3 class="page-heading">Описание темы</h3>
-			<div id="theme-descr" data-route="/theme/description"><?= $this->render('/theme/_description', ['model'=>$firstSubthemeModel]); ?></div>
+			<div id="theme-descr" data-route="/theme/description" data-subject="$subjectId"><?= $this->render('/theme/_description', ['model'=>$firstSubthemeModel, 'subjectId'=>$subjectId]); ?></div>
         </div>
 	</div>
 	<div class="row">

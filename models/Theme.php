@@ -9,9 +9,9 @@ use Yii;
  *
  * @property integer $id
  * @property string $created_at
- * @property string $created_by
+ * @property integer $created_by
  * @property string $updated_at
- * @property string $updated_by
+ * @property integer $updated_by
  * @property string $title
  * @property string $description
  * @property integer $parent
@@ -54,12 +54,14 @@ class Theme extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
-            [['created_by', 'updated_by'], 'required'],
-            //[['created_at', 'updated_at'], 'safe'],
+       return [
+            [[/*'created_at',*/ 'created_by', 'updated_by'], 'required'],
+           // [['created_at', 'updated_at'], 'safe'],
+            [['created_by', 'updated_by', 'parent', 'complexity'], 'integer'],
             [['description'], 'string'],
-            [['parent'], 'integer'],
-            [['created_by', 'updated_by', 'title'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 255],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -128,7 +130,10 @@ class Theme extends \yii\db\ActiveRecord
         //$thModel->description = 'Empty';
         //$thModel->title = 'Empty';
         if (!$thModel->save())
+		{
+			\Yii::trace("Save KIM theme", print_r($thModel->errors, true));
             throw new \yii\base\UserException("Cannot save KIM theme");
+		}
         return $thModel;
     }
 }

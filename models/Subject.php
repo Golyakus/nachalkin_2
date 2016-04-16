@@ -31,7 +31,7 @@ class Subject extends \yii\db\ActiveRecord
 	public static function getSubjectName($subjectId)
 	{
 		$subjModel = static::findModel($subjectId);
-		return $subjModel->getTheme()->one()->title . ', ' . $subjModel->class;
+		return $subjModel->getTheme()->one()->title;// . ', ' . $subjModel->class;
 	}
 
     /**
@@ -57,12 +57,15 @@ class Subject extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
-            [['created_at', 'created_by', 'updated_by', 'class', 'theme_id'], 'required'],
+       return [
+            [['created_at', 'created_by', 'updated_by', 'class', 'theme_id', 'domain_id'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
-            [['theme_id'], 'integer'],
-            [['created_by', 'updated_by', 'class'], 'string', 'max' => 255],
+            [['created_by', 'updated_by', 'theme_id', 'domain_id'], 'integer'],
+            [['class'], 'string', 'max' => 255],
+            [['domain_id'], 'exist', 'skipOnError' => true, 'targetClass' => Domain::className(), 'targetAttribute' => ['domain_id' => 'id']],
             [['theme_id'], 'exist', 'skipOnError' => true, 'targetClass' => Theme::className(), 'targetAttribute' => ['theme_id' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 

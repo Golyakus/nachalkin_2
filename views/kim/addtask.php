@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="col-lg-offset-1 col-lg-7">
 			
 			<h3 class="page-heading">Описание темы</h3>
-			<div id="theme-descr" data-route="description"><?= $this->render('_description', [
+			<div id="theme-descr" data-route="description" data-subject="$subjectId"><?= $this->render('_description', [
 					'model'=>\app\models\Subject::findModel($subjectId)->getTheme()->one(),
 				]); ?>
 			</div>

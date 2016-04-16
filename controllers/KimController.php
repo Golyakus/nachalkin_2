@@ -30,7 +30,7 @@ class KimController extends Controller
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
 					[
-                        'actions' => ['index', 'view', 'description', 'create', 'update', 'delete', 'deltask', 'delt', 'tasklist', 'addtask'],
+                        'actions' => ['index', 'view', 'description', 'create', 'update', 'delete', 'deltask', 'delt', 'tasklist', 'addtask', 'addt'],
                         'allow' => true,
                         'roles' => ['teacher'],	
 					]
@@ -74,17 +74,12 @@ class KimController extends Controller
     public function actionCreate($subjectId)
     {
         $model = new Kim();
-        $model->subject_id = $subjectId;
-        $model->created_by = $model->updated_by = \Yii::$app->user->id;
-        $model->status = \app\models\Kim::KIM_STATUS_DRAFT;
+		$model->initialPopulate($subjectId);       
         $post = Yii::$app->request->post();
-        $model->created_at = $model->updated_at = (new \DateTime())->format('Y-m-d H:i:s');
-        $model->solvetime = 30;
         if ($model->load($post)) 
         {
             $themeModel = \app\models\Theme::makeEmptyTheme(\Yii::$app->user->id);
             $model->theme_id = $themeModel->id;
-
             return $this->processPostKimRequest($post, $model);
         } 
         else 
@@ -101,7 +96,9 @@ class KimController extends Controller
         $subjectId = 1;
 
         if (!$model->save())
+		{
             throw new \yii\base\UserException("Cannot save loaded KIM");
+		}
         if (isset($post['submitb']))
         {
             if ($post['submitb'] == "addtask")

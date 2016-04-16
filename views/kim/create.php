@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="kim-create">
 
-	<span><?= app\models\Subject::getSubjectName($model->subject_id) ?></span>
+	<h1><?= app\models\Subject::getSubjectName($model->subject_id) ?></h1>
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
