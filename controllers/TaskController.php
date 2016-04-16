@@ -30,7 +30,7 @@ class TaskController extends Controller
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
 					[
-                        'actions' => ['index', 'view', 'update', 'actionUpdatekim'],
+                        'actions' => ['index', 'view', 'update', 'updatekim'],
                         'allow' => true,
                         'roles' => ['teacher'],	
 					],
