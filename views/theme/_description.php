@@ -10,8 +10,8 @@ $themeId = $model->id;
      <div class="panel-heading h4">
      	<b class="active-theme-title"><?= $model->title ?></b>	          
      	<div class="pull-right">
-     		<a href="<?= "/theme/update/$themeId/$subjectId" ?>" class="btn btn-default btn-sm btn-panel-heading" >Редактировать тему</a>
-     		<a href= "<?= "/task/choosetype/$subjectId/$themeId" ?>"  class="btn btn-default btn-sm btn-panel-heading" > Добавить упражнение в тему</a>
+     		<a href="<?=  "/theme/update/$themeId/$subjectId" ?>" class="btn btn-default btn-sm btn-panel-heading" >Редактировать тему</a>
+     		<a href="<?= "/task/choosetype/$subjectId/$themeId" ?>"  class="btn btn-default btn-sm btn-panel-heading" > Добавить упражнение в тему</a>
      	</div>
      </div>
      <div class="panel-body">

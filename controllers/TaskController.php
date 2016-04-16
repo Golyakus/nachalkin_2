@@ -39,7 +39,7 @@ class TaskController extends Controller
                         'allow' => true,
                         'roles' => ['admin-teacher'],	
 					],
-[					[
+					[
                         'actions' => ['solverand', 'solve'],
                         'allow' => true,
                         'roles' => ['pupil'],	
@@ -136,7 +136,7 @@ class TaskController extends Controller
         } else {
             $params['invitation'] = 'Редактирование упражнения' . " в задании «" . $theme['subtheme'] . "»";
             $params['action'] = \app\utils\TaskType::RENDER_EDIT_ACTION; 
-            $theme['subthemeUrl'] = '/kim/update?id=' . $kim->id];      
+            $theme['subthemeUrl'] = '/kim/update?id=' . $kim->id;      
             return $this->render('update', compact('model', 'theme', 'params'));
         }
     }

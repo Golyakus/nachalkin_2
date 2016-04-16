@@ -69,6 +69,7 @@ $config = [
 				'theme/view/<subjectId:\d+>/<id:\d+>'=> 'theme/view',
 				'theme/list/<subjectId:\d+>' => 'theme/list',
 				'theme/update/<id:\d+>/<subjectId:\d+>' => 'theme/update',
+				'theme/description/<id:\d+>/<subjectId:\d+>' => 'theme/description',
                 'kim/create/<subjectId:\d+>' => 'kim/create',
             ],
         ],
