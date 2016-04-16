@@ -36,12 +36,6 @@ if (!$firstSubthemeModel) $firstSubthemeModel = $model;
 
 	<?= $this->render('_subjects', compact('domainProvider', 'subjectModel', 'classItems')) ?>
 	
-<!--	 <select id="grade" class="form-control">
-  		<option >4 класс</option>
-  		<option >4 класс</option>
-  		<option >4 класс</option>
-	</select> 
--->
 	<div class="row">
 		<div class="col-lg-4">
 			<h3>Темы</h3>
@@ -88,9 +82,9 @@ if (!$firstSubthemeModel) $firstSubthemeModel = $model;
               'class' => 'yii\grid\ActionColumn',
               'template' => '{update} {delete}',
               'buttons' => [
-                'update' => function ($url, $model, $key) { return '<a href="/kim/update?id='.$model->id . 
+                'update' => function ($url, $model, $key){ return '<a href="/kim/update/'.$model->id . 
                 '" title="Редактировать" aria-label="Редактировать" data-pjax="0"><span class="glyphicon glyphicon-pencil"></span></a>'; },
-                'delete' => function ($url, $model, $key) { return '<a href="/kim/delete?id='.$model->id . 
+                'delete' => function ($url, $model, $key) { return '<a href="/kim/delete/'.$model->id .
                   '" title="Удалить" aria-label="Удалить" data-confirm="Вы уверены, что хотите удалить этот КИМ?" '.
                    'data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a>';
                 }

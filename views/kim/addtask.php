@@ -21,7 +21,7 @@ function generateNestable($treeElement)
 	echo '</ol>';
 }
 
-$subjectId = 1;  // TODO:: correct subjectId
+$subjectId = $model->subject_id;
 $userId = \Yii::$app->user->id;
 
 $this->title = 'Добавление упражнений в задание';

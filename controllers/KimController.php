@@ -30,9 +30,9 @@ class KimController extends Controller
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
 					[
-                        'actions' => ['index', 'view', 'description', 'create', 'update', 'delete', 'deltask', 'delt', 'tasklist', 'addtask', 'addt'],
+                        'actions' => ['view', 'description', 'create', 'update', 'delete', 'deltask', 'delt', 'tasklist', 'addtask', 'addt'],
                         'allow' => true,
-                        'roles' => ['teacher'],	
+                        'roles' => ['admin-teacher'],	
 					]
                 ],
             ],			
@@ -92,9 +92,6 @@ class KimController extends Controller
 
     private function processPostKimRequest($post, $model)
     {
-        // TODO:::
-        $subjectId = 1;
-
         if (!$model->save())
 		{
             throw new \yii\base\UserException("Cannot save loaded KIM");
@@ -104,13 +101,12 @@ class KimController extends Controller
             if ($post['submitb'] == "addtask")
                 return $this->redirect(['addtask', 'id' => $model->id]);
             else if ($post['submitb'] == "savekim")
-                return $this->redirect('/site/index');
-            print_r($post);
+                return $this->redirect('/site/index/'.$model->subject_id);
         }
         else if (isset($post['edittask']))
         {
             //return $this->redirect(['edittask', 'id' => $post['edittask']]);
-            return $this->redirect(['/task/updatekim/' . $post['edittask'] . '/' . $subjectId]);
+            return $this->redirect(['/task/updatekim/' . $post['edittask'] . '/' . $model->subject_id]);
         }
         else // should not be here!!!! check and throw Exception....
             return $this->redirect(['view', 'id' => $model->id]);
@@ -128,7 +124,7 @@ class KimController extends Controller
         $post = Yii::$app->request->post();
         if (isset($post[\app\models\Kim::KIM_ADDTASK_BUTTON_NAME]))
         {
-            $this->redirect("update?id=" . $id);
+            $this->redirect("update/$id");
         } else {
             $model = $this->findModel($id);
 			self::checkAccess($model);
@@ -196,11 +192,8 @@ class KimController extends Controller
             $dataProvider = new \yii\data\ActiveDataProvider(
                     ['query' => \app\models\Task::find()->where (['theme_id'=>$model->theme_id])]
             );           
-            return $this->render('update', [
-                'model' => $model,
-                'dataProvider' => $dataProvider
-            ]);
-        }
+            return $this->render('update', compact('model', 'dataProvider'));
+       }
     }
 
     /**
@@ -212,10 +205,11 @@ class KimController extends Controller
     public function actionDelete($id)
     {
 		$model = $this->findModel($id);
+		$subjectId = $model->subject_id;
 		self::checkAccess($model);
         $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect("/site/index/$subjectId");
     }
 
     /**
@@ -241,6 +235,6 @@ class KimController extends Controller
         \Yii::trace($task->id, $task->theme_id);
         $task->delete();
         
-        return $this->redirect(['update?id='.$model->id]);
+        return $this->redirect('update/'.$model->id);
     }
 }

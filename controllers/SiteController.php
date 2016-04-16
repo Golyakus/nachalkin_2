@@ -66,7 +66,7 @@ class SiteController extends Controller
         $subjectModel = \app\models\Subject::findOne($subjectId);
         if (!$subjectModel)
             throw new \yii\web\NotFoundHttpException("Subject with id=$subjectId not found");
-		$dataProvider = new \yii\data\ActiveDataProvider(['query'=>\app\models\Kim::find(['subject_id'=>$subjectId])]);
+		$dataProvider = new \yii\data\ActiveDataProvider(['query'=>\app\models\Kim::find()->where(['subject_id'=>$subjectId])]);
         $domainProvider = new \yii\data\ActiveDataProvider(['query' => \app\models\Domain::find()->where(1)]);
         // find all classes for current domain
         $query = \app\models\Subject::find()->where(['domain_id' => $subjectModel->domain_id])->orderBy(['class' => SORT_ASC]);

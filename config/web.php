@@ -71,6 +71,9 @@ $config = [
 				'theme/update/<id:\d+>/<subjectId:\d+>' => 'theme/update',
 				'theme/description/<id:\d+>/<subjectId:\d+>' => 'theme/description',
                 'kim/create/<subjectId:\d+>' => 'kim/create',
+				'kim/update/<id:\d+>' => 'kim/update',
+				'kim/delete/<id:\d+>' => 'kim/delete',
+				'site/index/<subjectId:\d+>' => 'site/index',
             ],
         ],
 		'view'=> [
