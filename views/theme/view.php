@@ -55,7 +55,13 @@ $themeId = $model->id;
 			        	echo '<div class="panel-heading">';
 			        	echo "<b>Упражнение №$id  </b>";
 			        	echo Html::a("Редактировать", \Yii::$app->urlManager->createUrl("task/update/$id/$subjectId"), ['class' => 'pull-right']);
-			        	
+			        	echo Html::a('', \Yii::$app->urlManager->createUrl("task/delete?id=$id"), [
+				            'class' => 'fa fa-md fa-close btn btn-sm btn-danger',
+				            'data' => [
+				                'confirm' => 'Вы уверены что хотите удалить это упражнение?',
+				                'method' => 'post',
+				            ],
+				        ]);
 			        	
 			        	echo "</div>";
 			        	echo '<div class="panel-body">';

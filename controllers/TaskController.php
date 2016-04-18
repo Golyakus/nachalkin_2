@@ -151,8 +151,8 @@ class TaskController extends Controller
 		$model = $this->findModel($id);
 		self::checkAccess($model);
         $model->delete();
-
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->getReferrer());
+       // return $this->redirect(['index']);
     }
 
     /**
