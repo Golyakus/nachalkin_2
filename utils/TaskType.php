@@ -222,7 +222,7 @@ abstract class TaskType
 	{
 		// for version 2: parse xml, create array of variables and render task elements
 		$elements = $this->parseXml($elem);
-		print_r($elements);
+		//print_r($elements);
 		$this->processModel($elements, $params['model'], $params['action']);
 		$elements['params'] = $params;
 
