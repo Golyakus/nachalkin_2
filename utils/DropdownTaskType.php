@@ -11,12 +11,35 @@ class DropdownTaskType extends TaskType
 	}
 
 	public function getType() { return 'dropdown'; }
+	
 	public function getEditTitle()
 	{
 		return 'Выбор одного верного варианта из выпадающего списка';
 	}
-	public function getPrototypeFilename() { return TaskType::PROTOTYPE_DIR.'task_dropdown.xml'; }
+	
+	public function getPrototypeFilename() 
+	{ 
+		return Self::getFullPrototypeDir() . 'task_dropdown.xml'; 
+	}
+	
+	public function getFormTemplate()
+	{
+		return Self::getFullPrototypeDir() . 'task_dropdown.php';
+	}
 
+	public function checkAnswer($model, $postResponse)
+	{
+		if (!isset($postResponse[$model->getInputElementName()]))
+			return "";
+		if ($postResponse[$model->getInputElementName()] == $model->correctAnswer)
+			return $model->max_score;
+		else
+			return $postResponse[$model->getInputElementName()];
+	}
+
+
+	/** old stuff
+	*/
 	protected function traverseStart(\SimpleXMLElement $elem, $params)
 	{
 		extract($params);
@@ -78,17 +101,7 @@ class DropdownTaskType extends TaskType
 		if (isset($max_score))
 			$this->localscope['max_score'] = (string)$max_score;
 	}
-
-	public function checkAnswer($model, $postResponse)
-	{
-		if (!isset($postResponse[$model->getInputElementName()]))
-			return "";
-		if ($postResponse[$model->getInputElementName()] == $model->correctAnswer)
-			return $model->max_score;
-		else
-			return $postResponse[$model->getInputElementName()];
-	}
-
+	// end of old stuff
 }
 
 ?>

@@ -66,7 +66,7 @@ $themeId = $model->id;
 			        	echo "</div>";
 			        	echo '<div class="panel-body">';
 			        	$form = ActiveForm::begin();
-						$model->taskType->traverse(['model'=>$model, 'form'=>$form, 'action'=>\app\utils\TaskType::RENDER_VIEW_ACTION]);
+						echo $model->taskType->traverse(['model'=>$model, 'form'=>$form, 'action'=>\app\utils\TaskType::RENDER_VIEW_ACTION, 'view'=>$this, 'showsolution'=>true]);
 						ActiveForm::end();			        	
 						echo '</div> </div>';
 						

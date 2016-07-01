@@ -42,8 +42,17 @@ $this->params['breadcrumbs'][] = $this->title;
 					echo "<div class='panel-heading'>";
 					echo "<b>$i.$title</b>";
 					echo "</div>";
-					echo "<div class='panel-body'>";	
-					$this->render($task->getPrototypeFilename(), ['params'=>['action'=>\app\utils\TaskType::RENDER_VIEW_ACTION], 'tasktype'=>$task]);
+					echo "<div class='panel-body'>";
+					
+					/*
+					$pseudoModel = new \app\models\Task();
+					$pseudoModel->setType($task->getType());
+					$params['model'] = $pseudoModel;
+					$xml = file_get_contents($task->getFullPrototypeDir() . $task->getPrototypeFilename());
+					$task->render(new \SimpleXMLElement($xml), ['action'=>\app\utils\TaskType::RENDER_VIEW_ACTION, 'view' => $this, 'showsolution'=>false, 'model'=>$pseudoModel]);
+					*/
+					echo $this->render($task->getPrototypeFilename(), ['params'=>['action'=>\app\utils\TaskType::RENDER_VIEW_ACTION, 'view' => $this, 'showsolution'=>false], 'tasktype'=>$task]);
+					
 					echo "<a class='btn btn-default btn-success' href='$url'>Добавить задачу этого типа</a>";
 					echo "</div> </div> </div>";
 

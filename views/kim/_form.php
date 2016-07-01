@@ -72,7 +72,7 @@ use yii\bootstrap\ActiveForm;
                                 <div class = "col-lg-10">
                                     <?php
                                 //$form = ActiveForm::begin(['class'=>'col-lg-8']);
-                                    $task->taskType->traverse(['model' => $task, 'form' => $form, 'action' => \app\utils\TaskType::RENDER_VIEW_ACTION]);
+                                    echo $task->taskType->traverse(['view' => $this, 'showsolution' => true, 'model' => $task, 'form' => $form, 'action' => \app\utils\TaskType::RENDER_VIEW_ACTION]);
                                 //ActiveForm::end();
                                     echo Html::submitButton('Редактировать упражнение', 
                                         ['class' => 'edit-task-btn btn btn-success', 'name'=>'edittask', 'value' => $task->id]

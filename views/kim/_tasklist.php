@@ -27,7 +27,7 @@ use yii\bootstrap\ActiveForm;
 						$id = $task->id;
 						$js = "\$('#$id').load('addt?id=$id&themeId=$kimThemeId')";
 						//$form = ActiveForm::begin();
-		        		$task->taskType->traverse(['model' => $task, /*'form' => $form,*/ 'action' => \app\utils\TaskType::RENDER_VIEW_ACTION]);
+		        		echo $task->taskType->traverse(['model' => $task, 'view' => $this, 'showsolution' => true,  'action' => \app\utils\TaskType::RENDER_VIEW_ACTION]);
 		        		//ActiveForm::end();
 		        		if (isset($kimTasks[$id]))
 		        		{

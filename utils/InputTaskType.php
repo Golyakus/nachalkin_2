@@ -9,14 +9,35 @@ class InputTaskType extends TaskType
 	}
 	public function getFormTemplate()
 	{
-		return TaskType::PROTOTYPE_DIR.'inputtype';
+		return Self::getFullPrototypeDir() . 'task_input.php';
 	}
 	public function getType() { return 'input'; }
 	public function getEditTitle()
 	{
 		return 'Ввод числа или слова в поле для ответа';
 	}
-	public function getPrototypeFilename() { return TaskType::PROTOTYPE_DIR.'task_input.xml'; }	
+	public function getPrototypeFilename() { return Self::getFullPrototypeDir() . 'task_input.xml'; }
+
+	protected function processModel(array $elements, \app\models\Task $model, $action)
+	{
+		parent::processModel($elements, $model, $action);
+		$model->max_score = $elements['ans_element']['max_score'];
+		if ($action == TaskType::RENDER_SOLVE_ACTION)
+			$model->correctAnswer = $elements['ans_element']['text'];
+	}
+
+	public function checkAnswer($model, $postResponse)
+	{
+		if (!isset($postResponse[$model->getInputElementName()]))
+			return "";
+		if ($postResponse[$model->getInputElementName()] == $model->correctAnswer)
+			return $model->max_score;
+		else
+			return "0";
+	}
+
+	// old stuff for version 0
+
 
 	private $localscope = [];
 	
@@ -65,17 +86,6 @@ class InputTaskType extends TaskType
 		if (isset($max_score))
 			$params['model']->max_score = $max_score;
 	}
-
-	public function checkAnswer($model, $postResponse)
-	{
-		if (!isset($postResponse[$model->getInputElementName()]))
-			return "";
-		if ($postResponse[$model->getInputElementName()] == $model->correctAnswer)
-			return $model->max_score;
-		else
-			return "0";
-	}
-
 
 }
 

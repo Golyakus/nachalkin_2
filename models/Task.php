@@ -53,7 +53,7 @@ class Task extends \yii\db\ActiveRecord
 
 	public function loadFromPrototype()
 	{
-		$fileName = Yii::$app->basePath .'/views/task/'. $this->taskType->getPrototypeFilename();
+		$fileName = Yii::getAlias($this->taskType->getPrototypeFilename());
 		$this->content = file_get_contents($fileName);
 		$this->updateFromContent();
 	}

@@ -2,6 +2,7 @@
 namespace app\utils;
 
 use \yii\bootstrap\ActiveForm;
+use \yii;
 
 class TaskException extends \yii\base\UserException
 {
@@ -21,6 +22,8 @@ abstract class TaskType
 	const RENDER_EDIT_ACTION = 4;	
 	const RENDER_SOLVE_ACTION = 5;
 	private static $tasktypes = NULL;
+	private $tagsOfInterest = [];
+	private $format_version = "0";
 
 	public static function loadTaskType($type)
 	{
@@ -46,11 +49,18 @@ abstract class TaskType
 		}
 		return self::$tasktypes;
 	}
+
+	public static function getFullPrototypeDir()
+	{
+		return '@app/views/task/' . Self::PROTOTYPE_DIR; 
+	}
+
 	const PROTOTYPE_DIR = 'tasktypes/';
 
 	public abstract function getType();
 	public abstract function getEditTitle();
 	public abstract function getPrototypeFilename();
+	public abstract function getFormTemplate();
 
 	// for TaskRecord and ActiveForm rendering
 
@@ -87,29 +97,133 @@ abstract class TaskType
 		if (!isset($model))
 			return;
 		$taskXml = new \SimpleXMLElement($model->content);
-		$this->render($taskXml[0], $params);
+		return $this->render($taskXml[0], $params);
 	}
 
-	public function render(\SimpleXMLElement $task, $params)
+	/**
+		$param[const $action, TaskType $task, ActiveForm $form, Task $model]
+	*/
+	public function render(\SimpleXMLElement $task, array $params)
 	{
 		static::check($task->getName(), 'task');
 		
 		$struct_type = false;
+		$fmt_version = '0';
 		foreach($task->attributes() as $attr => $val)
 		{
 			if ($attr == 'struct-type')
 			{
-				$struct_type = $val;
-				break;
-			}	
+				$struct_type = (string)$val;
+			}
+			else if ($attr == 'format-version')
+				$fmt_version = (string)$val;
 		}
 		static::check($struct_type, $this->getType());
 		
 		extract($params);
 		if (isset($form) && isset($model) &&isset($action) && $action == self::RENDER_EDIT_ACTION)
 			echo $form->field($model, 'content')->textArea(['rows' => 15]);
+		else if ($fmt_version == 0)
+			$this->traverseXMLElement($task[0], $params);
 		else
-			$this->traverseXMLElement($task[0], $params);	
+			return $this->processTask($task[0], $params);
+	}
+
+	protected function processModel(array $elements, \app\models\Task $model, $action)
+	{
+		// by default do nothing
+	}
+
+
+	/**
+		parses prototype and sets $tagsOfInterest array
+	*/
+	private function initialParse(\SimpleXMLElement $elem)
+	{
+		$tag = [];
+		$name = $elem->getName();
+		foreach ($elem->attributes() as $attr=>$val)
+		{
+			$tag[$attr] = (string)$val;
+		}
+
+		if (isset($this->tagsOfInterest[$name])) // it should be an array of tags...- if not - set it as array
+		{
+			if ($this->tagsOfInterest[$name]['is_single'])
+			{
+				unset($this->tagsOfInterest[$name]['is_single']);
+				$this->tagsOfInterest[$name] = ['is_single'=> false, 'values' => [$this->tagsOfInterest[$name], $tag]];
+			}
+			else
+				$this->tagsOfInterest[$name]['values'][] = $tag;
+		}
+		else
+		{
+			$tag['is_single'] = true;
+			$this->tagsOfInterest[$name] = $tag;
+		}
+		if ($elem->count())
+		{
+			foreach ($elem->children() as $child) {
+				$this->initialParse($child);
+			}
+		}
+	}
+
+	/**
+		appends new tags to the list of tags (first argument) and returns it as a result
+	*/
+	private function appendTags(array $tags, array $elements)
+	{
+		foreach ($elements as $name=>$val)
+			if ($this->tagsOfInterest[$name]['is_single'])
+				$tags[$name] = $val;
+			else // this is an array...
+				$tags[$name][] = $val;
+		return $tags;
+	}
+
+	/** 
+		returns array of tags
+		Each tag is array of [text,attributes]
+	*/
+	protected function parseXml(\SimpleXMLElement $elem)
+	{
+		$tags = [];
+		$name = $elem->getName();
+		if (!isset($this->tagsOfInterest[$name]))
+			return $tags;
+		$tag = [];
+		$tag['text'] = (string)$elem;
+		$attrCount = 0;
+		foreach ($elem->attributes() as $attr=>$val)
+		{
+			$tag[$attr] = (string)$val;
+				$attrCount++;
+		}
+		if ($attrCount == 0)
+			$tag = $tag['text'];
+		$tags[$name] = $tag;
+		if ($elem->count())
+			foreach ($elem->children() as $child)
+			{
+				$elements = $this->parseXml($child);
+				$tags = $this->appendTags($tags, $elements);
+			}
+		return $tags;
+	}
+
+	protected function processTask(\SimpleXMLElement $elem, array $params)
+	{
+		// for version 2: parse xml, create array of variables and render task elements
+		$elements = $this->parseXml($elem);
+		$this->processModel($elements, $params['model'], $params['action']);
+		$elements['params'] = $params;
+
+		if (isset($params['view']))
+		{
+			return $params['view']->render($this->getFormTemplate(), $elements/*, $params['view']->context*/);		 
+		}
 	}
 
 	private function traverseXMLElement(\SimpleXMLElement $elem, $params)
@@ -167,6 +281,14 @@ abstract class TaskType
 	
 	function __construct()
 	{
+
+		// new stuff - do not remove!!!
+		$this->initialParse(new \SimpleXMLElement(file_get_contents(Yii::getAlias( $this->getPrototypeFilename()))));
+		if (isset($this->tagsOfInterest['task']['format-version']))
+			$this->format_version = $this->tagsOfInterest['task']['format-version']; 
+		// end of new stuff
+
+
 		$this->startElement['task'] = function($self, $elem, $params) {
 			extract($params);
 			if ($action != self::PARSE_ACTION)

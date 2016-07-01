@@ -13,7 +13,12 @@ class RadioTaskType extends ButtonTaskType
 	{
 		return 'Выбор одного верного ответа из предложенных вариантов';
 	}
-	public function getPrototypeFilename() { return TaskType::PROTOTYPE_DIR.'task_radio.xml'; }	
+	public function getPrototypeFilename() { return Self::getFullPrototypeDir() . 'task_radio.xml'; }	
+	public function getFormTemplate()
+	{
+		return Self::getFullPrototypeDir() . 'task_radio.php';
+	}
+
 
 	public function checkAnswer($model, $postResponse)
 	{
