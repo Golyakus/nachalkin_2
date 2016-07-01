@@ -179,7 +179,10 @@ abstract class TaskType
 			if ($this->tagsOfInterest[$name]['is_single'])
 				$tags[$name] = $val;
 			else // this is an array...
-				$tags[$name][] = $val;
+				if (!isset($tags[$name]))
+					$tags[$name] = [$val];
+				else
+					$tags[$name][] = $val;
 		return $tags;
 	}
 
@@ -203,7 +206,9 @@ abstract class TaskType
 		}
 		if ($attrCount == 0)
 			$tag = $tag['text'];
+
 		$tags[$name] = $tag;
+
 		if ($elem->count())
 			foreach ($elem->children() as $child)
 			{
@@ -217,12 +222,13 @@ abstract class TaskType
 	{
 		// for version 2: parse xml, create array of variables and render task elements
 		$elements = $this->parseXml($elem);
+		print_r($elements);
 		$this->processModel($elements, $params['model'], $params['action']);
 		$elements['params'] = $params;
 
 		if (isset($params['view']))
 		{
-			return $params['view']->render($this->getFormTemplate(), $elements/*, $params['view']->context*/);		 
+			return $params['view']->render($this->getFormTemplate(), $elements);		 
 		}
 	}
 

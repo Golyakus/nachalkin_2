@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<task struct-type="check">
+<task struct-type="check" format-version="2">
   <body>
     Сколько дней в году на планете Земля?   
   </body>
-  <answer type="check" value="1_2" max_score="10">
-    <ans-element anstype="check-box" correct="true" score="5">365</ans-element>
-    <ans-element anstype="check-box" correct="true" score="5">366</ans-element>
-    <ans-element anstype="check-box" correct="false" score="-5">367</ans-element>
-  </answer>
+  <answer_prefix></answer_prefix>
+  <answer type="check" value="1_2" max_score="10" />
+  <ans_element anstype="check" correct="true" score="5">365</ans_element>
+  <ans_element anstype="check" correct="true" score="5">366</ans_element>
+  <ans_element anstype="check" correct="false" score="-5">367</ans_element>
+  <answer_suffix></answer_suffix>
+  <solution></solution>
 </task>
 

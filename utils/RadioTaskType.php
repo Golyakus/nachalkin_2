@@ -19,7 +19,6 @@ class RadioTaskType extends ButtonTaskType
 		return Self::getFullPrototypeDir() . 'task_radio.php';
 	}
 
-
 	public function checkAnswer($model, $postResponse)
 	{
 		if (!isset($postResponse[$model->getInputElementName()]))

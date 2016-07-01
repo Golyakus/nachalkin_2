@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<task struct-type="radio">
+<task struct-type="radio" format-version="2">
   <body> Сколько будет 2 + 2 ?
   </body>
-  <answer type="radio" value="2" max_score="10">
-    <ans-element anstype="check-box" score="-5">3</ans-element>
-    <ans-element anstype="check-box" correct="true" score="10">4</ans-element>
-    <ans-element anstype="check-box" score="0">Не знаю</ans-element>
-  </answer>
+  <answer type="radio" value="2" max_score="10" />
+  <answer_prefix></answer_prefix>
+  <ans_element anstype="check" score="-5">3</ans_element>
+  <ans_element anstype="check" correct="true" score="10">4</ans_element>
+  <ans_element anstype="check" score="0">Не знаю</ans_element>
+  <answer_suffix></answer_suffix>
+  <solution></solution>
 </task>
 

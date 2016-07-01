@@ -1,0 +1,123 @@
+Схема обработки задач в системе
+
+1. Для каждого вида задачи создается особый класс - тип задачи, производный от класса TaskType. Все классы типов хранятся в директории @app/utils.
+Тип задачи ответчает за логику отрисовки задачи. Для отрисовки служат два метода: render и traverse.
+....
+
+2. Также для каждого типа задачи создается ее прототип - xml-файл. Все прототипы хранятся в директории @app/views/task/tasktypes.
+Прототип имеет две роли. Первая - служить шаблоном для создания новых задач этого типа. Вторая - определять набор необходимых тэгов, информация из которых
+будет использована при отрисовке (в методах класса типа задачи и в файле-шаблоне отрисовки - см. след. пункт).
+При отрисовке любой задачи ее xml парсится и результатом прасинга является массив, ключами которого являются имена тэгов из прототипа. Все остальные тэги не обрабатываются и вставляются
+as is. К числу таких тэгов относятся, например, html-тэги, например, image и т.п., их можно вставлять в текст задачи без ограничений.
+Если тэг одиночный, то значением в массиве распарсенных тэгов по ключу-имени тэга является информация из тэга. 
+Если одноименных тэгов несколько (например, ans_element), то значение элемента массива само является массивом, с нумерацией от 0. 
+Информация из тэга (то есть значение из массива) есть либо просто строка-текст из тэга (если в тэге нет атрибутов), 
+либо это массив, в котором есть обязательный ключ - text (это строка с текстом из тэга). Остальные ключи соотвествуют атрибутам.
+Например, прототип task_input.xml распарсивается в следующий массив
+task_input.xml:
+<?xml version="1.0" encoding="utf-8"?>
+<task struct-type="input" format-version="2">
+  <body>
+    Винни-Пух, Сова, Кролик и Пятачок вместе съели 70 бананов. При этом Сова и Кролик съели вместе 45 бананов. Сколько бананов съел Винни-Пух, если известно, что он съел больше всех бананов?     
+  </body>
+  <answer_prefix>Винни-Пух съел</answer_prefix>
+  <ans_element numeric="true" max_score="10">25</ans_element>
+  <answer_suffix>бананов</answer_suffix>
+  <solution></solution>
+</task>
+
+
+массив распарсенных тэгов:
+Array ( [task] => Array ( [text] => [struct-type] => input [format-version] => 2 ) 
+        [body] => Винни-Пух, Сова, Кролик и Пятачок вместе съели 70 бананов. При этом Сова и Кролик съели вместе 45 бананов. Сколько бананов съел Винни-Пух, если известно, что он съел больше всех бананов?     
+        [answer_prefix] => Винни-Пух съел 
+        [ans_element] => Array ( [text] => 25 [numeric] => true [max_score] => 10 ) 
+        [answer_suffix] => бананов 
+		[solution] => 
+) 
+
+Заметим, что вложенность тэгов не учитывается (для простоты обработки).
+
+Пример для прототипа радио-задачи:
+task_radio.xml:
+<?xml version="1.0" encoding="utf-8"?>
+<task struct-type="radio" format-version="2">
+  <body> Сколько будет 2 + 2 ?
+  </body>
+  <answer type="radio" value="2" max_score="10" />
+  <answer_prefix></answer_prefix>
+  <ans_element anstype="check" score="-5">3</ans_element>
+  <ans_element anstype="check" correct="true" score="10">4</ans_element>
+  <ans_element anstype="check" score="0">Не знаю</ans_element>
+  <answer_suffix></answer_suffix>
+  <solution></solution>
+</task>
+
+массив распарсенных тэгов:
+Array ( [task] => Array ( [text] => [struct-type] => radio [format-version] => 2 ) 
+		[body] => Сколько будет 2 + 2 ? 
+		[answer] => Array ( [text] => [type] => radio [value] => 2 [max_score] => 10 ) 
+		[answer_prefix] => [ans_element] => Array ( 
+												[0] => Array ( [text] => 3 [anstype] => check [score] => -5 ) 
+												[1] => Array ( [text] => 4 [anstype] => check [correct] => true [score] => 10 ) 
+												[2] => Array ( [text] => Не знаю [anstype] => check [score] => 0 ) 
+											) 
+		[answer_suffix] => 
+		[solution] => 
+)
+
+4. Также для каждого типа задачи создается файл-шаблон отрисовки. Как правило, он называется так же, как и пртиотип, но имеет расширение php, а не xml.
+Это файл аналогичен view-файлам из Yii и содержит в себе программу отрисовки задачи. Кроме массива распарсенных тэгов туда передаются дополнительные параматры через массив params.
+Для удобства массив распарсенных тэгов распаковывается в набор переменных, поэтому для примера с task_input.php в файле определены следующие переменные из массива тэгов:
+$task (как правило не используется непосредственно при отрисовке, но содержит полезную информацию, используемую внутри системы (например, версию формата, тип задачи и т.п.)
+$body
+$answer_prefix
+$ans_element
+$answer_suffix
+$solution
+
+Эти переменные используются в файле-шаблоне отрисовки:
+task_input.php
+
+<?php
+/*
+	$params - array[action, showsolution, model]
+	$body
+	$answer_prefix
+	$ans_element[numeric,max_score,text]
+	$answer_suffix
+	$solution
+*/
+?>
+<div><?= $body ?></div>
+<div>Ответ:
+<?php
+	extract($params);
+	if (isset($answer_prefix)) echo $answer_prefix;
+	$answer_length = strlen($ans_element['text']) + 1;
+	if ($action == \app\utils\TaskType::RENDER_SOLVE_ACTION)
+	{
+		$name = $model->getInputElementName();
+		$input = "<input class='task-form-input' style='width:$answer_length"."em;'"."name=\"$name\" />";
+	}
+	else if ($action == \app\utils\TaskType::RENDER_VIEW_ACTION)
+	{
+		$answer = $ans_element['text'];
+		$input = "<input class='task-form-input' maxlength=$answer_length style='width:$answer_length"."em' "."value='$answer' disabled/>";
+	}
+	echo $input;
+// TODO : сейчас игнорируется numeric атрибут - поговорить....
+	if (isset($answer_suffix)) echo $answer_suffix;
+	if (isset($solution) && $showsolution)
+	{
+		echo '<br/>'; 
+		echo 'Решение:'; 
+		echo $solution;
+	}
+?>
+</div>
+
+Такая схема отделяет представление (отрисоку) от логики ее обработки и существенно удобнее, чем предыдущий вариант.
+
+
+

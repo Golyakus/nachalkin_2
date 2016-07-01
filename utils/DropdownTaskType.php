@@ -3,8 +3,6 @@ namespace app\utils;
 
 class DropdownTaskType extends TaskType 
 {
-	private $localscope = [];
-
 	public function makeBehavior()
 	{
 		return new \app\behaviors\RadioTaskBehavior();
@@ -37,9 +35,25 @@ class DropdownTaskType extends TaskType
 			return $postResponse[$model->getInputElementName()];
 	}
 
+	protected function processModel(array $elements, \app\models\Task $model, $action)
+	{
+		parent::processModel($elements, $model, $action);
+		$model->max_score = $elements['answer']['max_score'];
+		if ($action == TaskType::RENDER_SOLVE_ACTION)
+		{
+			foreach ($elements['ans_element'] as $option) {
+				if (isset($option['correct']) && $option['correct'] == 'true')
+				{
+					$model->correctAnswer = $option['text'];
+				}
+			}
+			$model->correctAnswer = $elements['ans_element']['text'];
+		}
+	}
 
 	/** old stuff
 	*/
+	private $localscope = [];
 	protected function traverseStart(\SimpleXMLElement $elem, $params)
 	{
 		extract($params);

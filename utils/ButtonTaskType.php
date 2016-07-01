@@ -3,6 +3,26 @@ namespace app\utils;
 
 abstract class ButtonTaskType extends TaskType
 {
+
+	protected function processModel(array $elements, \app\models\Task $model, $action)
+	{
+		parent::processModel($elements, $model, $action);
+		$model->max_score = $elements['answer']['max_score'];
+
+		if ($action == TaskType::RENDER_SOLVE_ACTION)
+		{
+			$model->setNameSeed();
+			foreach ($elements['ans_element'] as $option) {
+				if (isset($option['correct']) && $option['correct'] == 'true')
+				{
+					$model->updateCorrectAnswer($option['score']);
+				}
+			}
+		}
+	}
+
+	/** old stuff
+	*/
 	protected function getHtmlAnswerType() { return $this->getType(); }
 
 	private $localscope = [];
@@ -39,17 +59,7 @@ abstract class ButtonTaskType extends TaskType
 			echo $retval;
 		return false;
 	}
-	function __construct()
-	{
-		parent::__construct();
-		/*
-		$this->endElement['ans-element'] = function($self, $elem, $params) {
-			extract($params);
-			if ($action != TaskType::PARSE_ACTION)
-				echo '</input><br>';
-		};
-		*/
-	}
+
 	protected function onAttributes(\SimpleXMLElement $elem, $scope, $params)
 	{
 		parent::onAttributes($elem, $scope, $params);

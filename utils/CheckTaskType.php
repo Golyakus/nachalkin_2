@@ -8,7 +8,7 @@ class CheckTaskType extends ButtonTaskType
 		return new \app\behaviors\CheckTaskBehavior();
 	}
 	public function getType() { return 'check'; }
-	protected function getHtmlAnswerType() { return 'checkbox'; }
+	
 	public function getEditTitle()
 	{
 		return 'Выбор нескольких верных ответов из предложенных вариантов';
@@ -23,6 +23,9 @@ class CheckTaskType extends ButtonTaskType
 	{
 		return $model->analyseAnswer($model->max_score, $postResponse);
 	}
+
+	// obsolete - for compatibility with format version = 0
+	protected function getHtmlAnswerType() { return 'checkbox'; }
 
 }
 
