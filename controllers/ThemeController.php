@@ -33,6 +33,11 @@ class ThemeController extends Controller
                         'actions' => ['description', 'list', 'create', 'update', 'delete', 'index', 'view'],
                         'allow' => true,
                         'roles' => ['admin-teacher'],	
+					],
+					[
+						'actions' => ['view'],
+						'allow' => true,
+						'roles'=> ['task-editor'],
 					]
                 ],
             ],			
@@ -54,7 +59,7 @@ class ThemeController extends Controller
 
     public function actionList($subjectId)
     {
-        $themeTree = \app\models\Subject::getThemeTree($subjectId, \Yii::$app->user->id);
+        $themeTree = \app\models\Subject::getThemeTree($subjectId, null);
         //$themeTree->print_r();
         //$themeId = \app\models\Subject::findModel($subjectId)->id;
         $dataProvider = new \yii\data\ArrayDataProvider([

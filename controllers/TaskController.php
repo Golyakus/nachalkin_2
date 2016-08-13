@@ -35,15 +35,15 @@ class TaskController extends Controller
                         'roles' => ['teacher'],	
 					],
 					[
-                        'actions' => ['create', 'delete', 'choosetype' , 'newtask'],
+                        'actions' => ['create', 'delete', 'choosetype' , 'newtask', 'upload'],
                         'allow' => true,
-                        'roles' => ['admin-teacher'],	
+                        'roles' => ['admin-teacher', 'task-editor'],	
 					],
 					[
                         'actions' => ['solverand', 'solve'],
                         'allow' => true,
                         'roles' => ['pupil'],	
-					]
+					],
                 ],
             ],			
         ];
@@ -231,6 +231,9 @@ class TaskController extends Controller
         else {
             $response->data = ['error'=>'Ошибка загрузки файла на сервер'];
         }
+
+		//\Yii::trace(print_r($response, true), "Response");
+
         return $response;
     }
 

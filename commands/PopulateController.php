@@ -34,7 +34,23 @@ class PopulateController extends Controller
         echo "\t" . $command . "\t" . $description . "\n";
  		$command = './yii populate/tasks xxx';
         $description = 'Добавляет задачи в тему с id=xxx';
-        echo "\t" . $command . "\t" . $description . "\n";    }
+        echo "\t" . $command . "\t" . $description . "\n";    
+ 		$command = './yii populate/adduser role id login password e-mail ';
+        $description = 'Добавляет в систему пользователя с ролью role и характеристиками (id login password e-mail)';
+        echo "\t" . $command . "\t" . $description . "\n";    
+	}
+
+	public function actionAdduser($role, $id, $login, $password, $email)
+	{
+		if (!isset($id) || !isset($login) ||  !isset($password) ||  !isset($email))
+		{
+			echo "Set id, login, password and e-mail for the user to add.\n";
+		}
+ 		if (!\app\models\User::createUser($id, $login, $password, $email))
+			echo "Problems with creating user...User was not added\n";
+		\Yii::$app->db->createCommand("INSERT INTO `auth_assignment`(`item_name`, `user_id`, `created_at`) VALUES ('task-editor', $id,NOW())")->execute();
+		echo "User was added successfully\n";
+	}
 
     public function actionSubjects()
     {
@@ -45,10 +61,10 @@ class PopulateController extends Controller
     	\Yii::$app->db->createCommand("INSERT INTO `theme`(`created_at`, `created_by`, `updated_by`, `title`, `description` " .
 		") VALUES (NOW(),102,102,'Метапредметность','')")->execute();
 		echo "Main themes inserted....\n";
-		\Yii::$app->db->createCommand("INSERT INTO `subject`(`created_at`, `created_by`, `updated_by`, `class`, `theme_id`)".
-		" VALUES (NOW(),102,102,'4 класс',2)")->execute();
-		\Yii::$app->db->createCommand("INSERT INTO `subject`(`created_at`, `created_by`, `updated_by`, `class`, `theme_id`)".
-		" VALUES (NOW(),102,102,'4 класс',3)")->execute();
+		\Yii::$app->db->createCommand("INSERT INTO `subject`(`created_at`, `created_by`, `updated_by`, `year_id`, `theme_id`)".
+		" VALUES (NOW(),102,102,'4',2)")->execute();
+		\Yii::$app->db->createCommand("INSERT INTO `subject`(`created_at`, `created_by`, `updated_by`, `year_id`, `theme_id`)".
+		" VALUES (NOW(),102,102,'4',3)")->execute();
 		echo "Subjects inserted....\n";
     }
 

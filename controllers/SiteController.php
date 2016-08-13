@@ -31,7 +31,7 @@ class SiteController extends Controller
                     [
                         'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['teacher'],
+                        'roles' => ['teacher', 'task-editor'],
                     ],               
 				],
             ],
@@ -69,24 +69,35 @@ class SiteController extends Controller
 		$dataProvider = new \yii\data\ActiveDataProvider(['query'=>\app\models\Kim::find()->where(['subject_id'=>$subjectId])]);
         $domainProvider = new \yii\data\ActiveDataProvider(['query' => \app\models\Domain::find()->where(1)]);
         // find all classes for current domain
-        $query = \app\models\Subject::find()->where(['domain_id' => $subjectModel->domain_id])->orderBy(['class' => SORT_ASC]);
+        $query = \app\models\Subject::find()->where(['domain_id' => $subjectModel->domain_id])->orderBy(['year_id' => SORT_ASC]);
         $classItems = [];
         foreach ($query->all() as $subj)
-            $classItems[] = ['label'=> $subj->class, 'url' => '/site/index?subjectId=' . $subj->id];
+            $classItems[] = ['label'=> $subj->year_id . ' класс', 'url' => '/site/index?subjectId=' . $subj->id];
 
         return $this->render('index', compact('subjectModel', 'dataProvider', 'domainProvider', 'classItems'));
 
     }
 
+    private function goIniDestination()
+    {
+    	if (\Yii::$app->user->can('admin') || \Yii::$app->user->can('teacher') || \Yii::$app->user->can('admin-teacher') || \Yii::$app->user->can('task-editor'))
+           	return $this->goHome();
+        else if (\Yii::$app->user->can('pupil'))
+           	return $this->redirect("/pupil/default/index");
+        else
+        	throw NotFoundHttpException("Пользователь не найден");
+    }
+
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
+        	return $this->goIniDestination();
+
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->goIniDestination();
         }
         return $this->render('login', [
             'model' => $model,
